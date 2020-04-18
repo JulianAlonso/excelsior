@@ -8,7 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		027D06A0F0722D96CECEA119 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D56FE5167ADF5E1FA05989EF /* LaunchScreen.storyboard */; };
+		1A938AAB36E6E5EDECE341C7 /* AppCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E7127C87BA817F21BEDC41AB /* AppCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4664F04320BB1FE2D4F243A7 /* LaunchScreen.strings in Resources */ = {isa = PBXBuildFile; fileRef = E1CEFA7A957BAA3DD52CE55B /* LaunchScreen.strings */; };
+		5C0026E62A835E9EC368C534 /* AppCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7127C87BA817F21BEDC41AB /* AppCore.framework */; };
 		6F98F714410DE0B3180C0244 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FD783DAE8E795BED0F06341 /* main.swift */; };
 		83A410C5723026F1E5C92429 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B14C790ADEF14AD4263F9F72 /* Assets.xcassets */; };
 		86F55F70A781852CDDA36DF8 /* excelsiorUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 688079DD7DFF18EE9BD19A82 /* excelsiorUITests.swift */; };
@@ -37,6 +39,7 @@
 			buildActionMask = 2147483647;
 			dstSubfolderSpec = 10;
 			files = (
+				1A938AAB36E6E5EDECE341C7 /* AppCore.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -73,6 +76,7 @@
 		9EAE36D2D17C06DE3DE29C84 /* UITest.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = UITest.plist; sourceTree = "<group>"; };
 		B14C790ADEF14AD4263F9F72 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DB4CA68501A65C3036F49828 /* App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = App.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E7127C87BA817F21BEDC41AB /* AppCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = AppCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,6 +84,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5C0026E62A835E9EC368C534 /* AppCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -120,6 +125,7 @@
 			isa = PBXGroup;
 			children = (
 				DB4CA68501A65C3036F49828 /* App.app */,
+				E7127C87BA817F21BEDC41AB /* AppCore.framework */,
 				11929B0497BA9DBFC401B779 /* Tests.xctest */,
 				1C6FEFE6324A0E6C93EB03C4 /* UITest.xctest */,
 			);

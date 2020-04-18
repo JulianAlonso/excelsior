@@ -4,4 +4,11 @@
    <FileRef
       location = "group:App/Excelsior.xcodeproj">
    </FileRef>
+   <Group
+      location = "group:Modules"
+      name = "Modules">
+      <FileRef
+         location = "group:AppCore/AppCore.xcodeproj">
+      </FileRef>
+   </Group>
 </Workspace>

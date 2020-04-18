@@ -9,7 +9,7 @@ extension Project {
                             product: .framework,
                             bundleId: "com.excelsior.\(name)",
                             deploymentTarget: .iOS(targetVersion: "10.0", devices: .iphone),
-                            infoPlist: infoPlist,
+                            infoPlist: .default,
                             sources: ["Sources/**"],
                             dependencies: dependencies),
                     Target(name: "\(name)UnitTests",

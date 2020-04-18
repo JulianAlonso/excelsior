@@ -29,7 +29,7 @@ let project = Project(name: "Excelsior",
                                  bundleId: "com.excelsior.app-uitests",
                                  deploymentTarget: .iOS(targetVersion: "10.0", devices: .iphone),
                                  infoPlist: .default,
-                                 sources: ["UITests"],
+                                 sources: ["UITests/**"],
                                  dependencies: [
                                      .target(name: "App")
                                  ])

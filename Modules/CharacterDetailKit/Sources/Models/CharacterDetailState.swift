@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import CommonUIKit
+import DisplayKit
 
 /// States of character detail view and associated values (Sum type)
 enum CharacterDetailState {

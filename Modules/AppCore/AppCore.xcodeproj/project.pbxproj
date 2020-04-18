@@ -7,12 +7,23 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		04B1B2C73F3D7A734CC1CA65 /* DataProvidersKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FF735E15060E9A51E4FA31B1 /* DataProvidersKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		05B7A6B1C65B43F767A50D55 /* CharacterListKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 680F8B106A8FAB0EE1405616 /* CharacterListKit.framework */; };
+		1099842C6893EEC28E95D96B /* NavigatorKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5753663989BCCB7306D59942 /* NavigatorKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		11C5921D3E99DFA61426208D /* DisplayKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = BD4AC91AE4714C0B8B94BA08 /* DisplayKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		19A8DAA03FB95BAF60687CB4 /* NavigatorKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5753663989BCCB7306D59942 /* NavigatorKit.framework */; };
 		552860946C169670C37A435B /* AppCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B8C5655C7DF584A534BADA10 /* AppCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		616A3EC1246C4087DCA6BEFE /* UnitTestAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB96FFCDC9C4CC2E5AB400F1 /* UnitTestAppDelegate.swift */; };
 		669DB43DF081FCD381398F47 /* AppCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B8C5655C7DF584A534BADA10 /* AppCore.framework */; };
+		89C3F03E6C4A3A5C44B6B1CA /* Support.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = BC6319E7ECB810EC9F8FCDE3 /* Support.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		8C9BEFA6DA88907B7CB2040D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71CBC491CF108A146CA660F5 /* AppDelegate.swift */; };
 		A47ED0123ED14820BC06026B /* AppLaunchCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E46FFC93591B9F075B329E68 /* AppLaunchCoordinator.swift */; };
+		AC79E900F6EA1F4156AF62DD /* CharacterListKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 680F8B106A8FAB0EE1405616 /* CharacterListKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		AF9C520DDCA49C3981B6F75E /* AppLaunchCoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F44FACB16FF5022BCD0743 /* AppLaunchCoordinatorTests.swift */; };
+		B1B3F39DB25D9EE5744D5A5B /* CharacterDetailKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 643D008E3A75231264B56CA5 /* CharacterDetailKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		C797DB1BB9A7E8A9844EC52E /* AppCore-Swift.h in Headers */ = {isa = PBXBuildFile; fileRef = A5415BB2F468A552BAF70EA1 /* AppCore-Swift.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		DA63D4B4FD25D21EEE2BB009 /* MarvelClient.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = BB40F238C09738D84B9B3715 /* MarvelClient.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		DBCC0F5B5AE63AF677641E18 /* CharacterDetailKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 643D008E3A75231264B56CA5 /* CharacterDetailKit.framework */; };
 		FBF696296503E5E9EC1BFD1C /* AppCoreKitAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = C998B77C97771A3481035A7C /* AppCoreKitAssembly.swift */; };
 /* End PBXBuildFile section */
 
@@ -33,6 +44,13 @@
 			dstSubfolderSpec = 10;
 			files = (
 				552860946C169670C37A435B /* AppCore.framework in Embed Frameworks */,
+				B1B3F39DB25D9EE5744D5A5B /* CharacterDetailKit.framework in Embed Frameworks */,
+				AC79E900F6EA1F4156AF62DD /* CharacterListKit.framework in Embed Frameworks */,
+				04B1B2C73F3D7A734CC1CA65 /* DataProvidersKit.framework in Embed Frameworks */,
+				11C5921D3E99DFA61426208D /* DisplayKit.framework in Embed Frameworks */,
+				DA63D4B4FD25D21EEE2BB009 /* MarvelClient.framework in Embed Frameworks */,
+				1099842C6893EEC28E95D96B /* NavigatorKit.framework in Embed Frameworks */,
+				89C3F03E6C4A3A5C44B6B1CA /* Support.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -50,14 +68,22 @@
 
 /* Begin PBXFileReference section */
 		0620F0D45AC750B42BBEA308 /* AppCore.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = AppCore.plist; sourceTree = "<group>"; };
+		5753663989BCCB7306D59942 /* NavigatorKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = NavigatorKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		643D008E3A75231264B56CA5 /* CharacterDetailKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CharacterDetailKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		680F8B106A8FAB0EE1405616 /* CharacterListKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CharacterListKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		71CBC491CF108A146CA660F5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		856CBD4F5C33E6AAC20CCA0F /* AppCoreUnitTests.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = AppCoreUnitTests.plist; sourceTree = "<group>"; };
 		91F44FACB16FF5022BCD0743 /* AppLaunchCoordinatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLaunchCoordinatorTests.swift; sourceTree = "<group>"; };
+		A5415BB2F468A552BAF70EA1 /* AppCore-Swift.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AppCore-Swift.h"; sourceTree = "<group>"; };
 		B8C5655C7DF584A534BADA10 /* AppCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = AppCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BB40F238C09738D84B9B3715 /* MarvelClient.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MarvelClient.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BC6319E7ECB810EC9F8FCDE3 /* Support.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Support.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BD4AC91AE4714C0B8B94BA08 /* DisplayKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DisplayKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C998B77C97771A3481035A7C /* AppCoreKitAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoreKitAssembly.swift; sourceTree = "<group>"; };
 		E46FFC93591B9F075B329E68 /* AppLaunchCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLaunchCoordinator.swift; sourceTree = "<group>"; };
 		EB96FFCDC9C4CC2E5AB400F1 /* UnitTestAppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitTestAppDelegate.swift; sourceTree = "<group>"; };
 		FD2DBC17A0417AD99DF2BF06 /* AppCoreUnitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AppCoreUnitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		FF735E15060E9A51E4FA31B1 /* DataProvidersKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DataProvidersKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,6 +91,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DBCC0F5B5AE63AF677641E18 /* CharacterDetailKit.framework in Frameworks */,
+				05B7A6B1C65B43F767A50D55 /* CharacterListKit.framework in Frameworks */,
+				19A8DAA03FB95BAF60687CB4 /* NavigatorKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -152,14 +181,30 @@
 			children = (
 				B8C5655C7DF584A534BADA10 /* AppCore.framework */,
 				FD2DBC17A0417AD99DF2BF06 /* AppCoreUnitTests.xctest */,
+				643D008E3A75231264B56CA5 /* CharacterDetailKit.framework */,
+				680F8B106A8FAB0EE1405616 /* CharacterListKit.framework */,
+				FF735E15060E9A51E4FA31B1 /* DataProvidersKit.framework */,
+				BD4AC91AE4714C0B8B94BA08 /* DisplayKit.framework */,
+				BB40F238C09738D84B9B3715 /* MarvelClient.framework */,
+				5753663989BCCB7306D59942 /* NavigatorKit.framework */,
+				BC6319E7ECB810EC9F8FCDE3 /* Support.framework */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		D73E6910B3ED6B6CA628667E /* Headers */ = {
+			isa = PBXGroup;
+			children = (
+				A5415BB2F468A552BAF70EA1 /* AppCore-Swift.h */,
+			);
+			path = Headers;
 			sourceTree = "<group>";
 		};
 		D954B12E17804BF8C6BB9D8D /* Project */ = {
 			isa = PBXGroup;
 			children = (
 				F43D0852710D2C1E491B5012 /* Derived */,
+				D73E6910B3ED6B6CA628667E /* Headers */,
 				26471CF98B3BDFA7EC95160D /* Sources */,
 				53D99DEE7F9579A4A498FA42 /* Tests */,
 			);
@@ -175,6 +220,17 @@
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		0CA9FF2A5C18CEA081FE41FC /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C797DB1BB9A7E8A9844EC52E /* AppCore-Swift.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
 		33C54554F45F6DFCE1365D38 /* AppCoreUnitTests */ = {
@@ -201,6 +257,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C46794CD3331B4069167829D /* Build configuration list for PBXNativeTarget "AppCore" */;
 			buildPhases = (
+				0CA9FF2A5C18CEA081FE41FC /* Headers */,
 				EDDD41B4BA993DC9D2A9C51C /* Sources */,
 				B8C7215D8E1E7C78975E4E38 /* Resources */,
 				FA35921EC9352A561007FA35 /* Embed Precompiled Frameworks */,

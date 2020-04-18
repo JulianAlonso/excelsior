@@ -1,7 +1,7 @@
 import ProjectDescription
 
 extension Project {
-    public static func module(name: String, dependencies: [TargetDependency] = []) -> Project {
+    public static func module(name: String, dependencies: [TargetDependency] = [], resources: ResourceType...) -> Project {
         Project(name: name,
                 targets: [
                     Target(name: name,
@@ -10,7 +10,11 @@ extension Project {
                             bundleId: "com.excelsior.\(name)",
                             deploymentTarget: .iOS(targetVersion: "10.0", devices: .iphone),
                             infoPlist: .default,
-                            sources: ["Sources/**"],
+                            sources: [
+                                "Sources/**",
+                            ],
+                            resources: .resources(with: resources),
+                            headers: Headers(private: ["Headers/*"]),
                             dependencies: dependencies),
                     Target(name: "\(name)UnitTests",
                             platform: .iOS,
@@ -24,4 +28,12 @@ extension Project {
                             ])
                 ])
     }
+}
+
+fileprivate extension Array where Element == FileElement {
+    static let resources: [FileElement] = [
+        "Sources/**/*.xib",
+        "Sources/**/*.storyboard",
+        "Resources/**"
+    ]
 }

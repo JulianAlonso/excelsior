@@ -8,7 +8,7 @@
 
 import Foundation
 import UIKit
-import CommonUIKit
+import DisplayKit
 
 /// Abstract factory that generates the right view controller given a view state
 class CharacterDetailViewControllerFactory {

@@ -8,7 +8,7 @@
 
 import Foundation
 import NavigatorKit
-import CommonUIKit
+import DisplayKit
 
 
 class InternalCharacterDetailNavigator {

@@ -8,10 +8,10 @@
 
 import Foundation
 import NavigatorKit
-import CommonUIKit
-import CharactersListKit
+import DisplayKit
+import CharacterListKit
 import CharacterDetailKit
-import DataProviders
+import DataProvidersKit
 import MarvelClient
 import UIKit
 

@@ -9,9 +9,9 @@
 import Foundation
 import NavigatorKit
 import UIKit
-import CommonUIKit
-import DataProviders
-import ToolsKit
+import DisplayKit
+import DataProvidersKit
+import Support
 
 /// This is the assembly for the feature - Character detail.
 

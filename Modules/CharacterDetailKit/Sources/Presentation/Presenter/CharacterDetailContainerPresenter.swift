@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import CommonUIKit
+import DisplayKit
 
 /// CharacterDetailContainerPresenter in the presenter in charge of retrieve details for a character and set the view into the right state
 final class CharacterDetailContainerPresenter{

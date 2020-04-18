@@ -7,8 +7,8 @@
 //
 
 import Foundation
-import DataProviders
-import ToolsKit
+import DataProvidersKit
+import Support
 
 /// GetCharacterDetail returns in the **main thread** the details of a character given their ID
 /// Also make all transformations between data layer models and presentation models

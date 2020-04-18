@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import Kingfisher
+//import Kingfisher
 
 protocol CharacterDetailViewControllerProvider: AnyObject {
     func characterDetailViewController(character: CharacterDetail) -> CharacterDetailViewController
@@ -51,14 +51,14 @@ extension CharacterDetailViewController: CharacterDetailView {
     }
     
     func setUpImage(_ url: URL?) {       
-        let placeholder = UIImage(named: "detail-placeholder",
-                                  in: Bundle(for: CharacterDetailViewController.self),
-                                  compatibleWith: nil)
-        if let imageURL = url {
-            imageView.kf.setImage(with: imageURL,
-                                  placeholder: placeholder)
-        } else {
-            imageView.image = placeholder
-        }
+//        let placeholder = UIImage(named: "detail-placeholder",
+//                                  in: Bundle(for: CharacterDetailViewController.self),
+//                                  compatibleWith: nil)
+//        if let imageURL = url {
+////            imageView.kf.setImage(with: imageURL,
+////                                  placeholder: placeholder)
+//        } else {
+//            imageView.image = placeholder
+//        }
     }
 }

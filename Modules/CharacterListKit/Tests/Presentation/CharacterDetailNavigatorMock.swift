@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import CommonUIKit
+import DisplayKit
 
 class CharacterDetailNavigatorMock: CharacterDetailNavigator{
     

@@ -8,6 +8,14 @@ public final class Promise<T, E: Error> {
         self.state = .pending(futures: [])
     }
     
+    public init(value: T) {
+        self.state = .fulfilled(value: value)
+    }
+    
+    public init(error: E) {
+        self.state = .rejected(error: error)
+    }
+    
     public convenience init(on queue: Queue, _ work: @escaping (Future<T, E>) -> Void) {
         self.init()
         queue.execute {
@@ -22,6 +30,5 @@ public final class Promise<T, E: Error> {
     private func reject(with error: E) {
         
     }
-
     
 }

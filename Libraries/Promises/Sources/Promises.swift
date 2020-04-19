@@ -31,4 +31,15 @@ public final class Promise<T, E: Error> {
         
     }
     
+    private func addFuture(future: Future<T, E>) {
+        switch state {
+        case .pending(let futures):
+            state = .pending(futures: futures + [future])
+        case .fulfilled(let value):
+            future.fulfill(value)
+        case .rejected(let error):
+            future.reject(error)
+        }
+    }
+    
 }

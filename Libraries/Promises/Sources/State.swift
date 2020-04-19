@@ -9,7 +9,7 @@ import Foundation
 
 enum State<Value, E: Error> {
 
-    case pending(futures: [Future<Value, E>])
+    case pending(callbacks: [Callback<Value, E>])
 
     case fulfilled(value: Value)
 

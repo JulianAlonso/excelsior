@@ -12,7 +12,7 @@ public protocol Queue {
 }
 
 extension DispatchQueue: Queue {
-    func execute(_ work: @escaping () -> Void) {
+    public func execute(_ work: @escaping () -> Void) {
         async { work() }
     }
 }

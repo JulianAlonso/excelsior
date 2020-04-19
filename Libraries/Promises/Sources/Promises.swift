@@ -1,12 +1,15 @@
 import Foundation
 
+public typealias Fulfill<T> = (T) -> Void
+public typealias Reject<E: Error> = (E) -> Void
+
 public final class Promise<T, E: Error> {
     
     private var state: State<T, E>
     private let lockQueue = DispatchQueue(label: "promise.lock.queue", qos: .userInitiated)
     
     public init() {
-        self.state = .pending(futures: [])
+        self.state = .pending(callbacks: [])
     }
     
     public init(value: T) {
@@ -26,35 +29,35 @@ public final class Promise<T, E: Error> {
     
     @discardableResult
     public func then(on queue: Queue = DispatchQueue.main, _ fulfill: @escaping (T) -> Void, _ reject: @escaping (Error) -> Void = { _ in }) -> Promise<T, E> {
-        addFuture(future: Future(fulfill: fulfill, reject: reject))
+        addCallback(callback: Callback(on: queue, fulfill: fulfill, reject: reject))
         return self
     }
     
     private func fulfill(with value: T) {
         lockQueue.async {
-            guard case .pending(let futures) = self.state else { return }
+            guard case .pending(let callbacks) = self.state else { return }
             self.state = .fulfilled(value: value)
-            futures.forEach { $0.fulfill(value) }
+            callbacks.forEach { $0.fulfill(value) }
         }
     }
 
     private func reject(with error: E) {
         lockQueue.async {
-            guard case .pending(let futures) = self.state else { return }
+            guard case .pending(let callbacks) = self.state else { return }
             self.state = .rejected(error: error)
-            futures.forEach { $0.reject(error) }
+            callbacks.forEach { $0.reject(error) }
         }
     }
     
-    private func addFuture(future: Future<T, E>) {
+    private func addCallback(callback: Callback<T, E>) {
         lockQueue.async {
             switch self.state {
-            case .pending(let futures):
-                self.state = .pending(futures: futures + [future])
+            case .pending(let callbacks):
+                self.state = .pending(callbacks: callbacks + [callback])
             case .fulfilled(let value):
-                future.fulfill(value)
+                callback.fulfill(value)
             case .rejected(let error):
-                future.reject(error)
+                callback.reject(error)
             }
         }
     }

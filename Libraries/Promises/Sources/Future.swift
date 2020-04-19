@@ -9,7 +9,7 @@ import Foundation
 
 public struct Future<T, E: Error> {
     
-    public let fulfill: (T) -> Void
-    public let reject: (E) -> Void
+    public let fulfill: Fulfill<T>
+    public let reject: Reject<E>
     
 }

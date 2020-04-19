@@ -1,8 +1,9 @@
 import ProjectDescription
 
 extension Project {
-    public static func module(name: String, dependencies: [TargetDependency] = [], resources: ResourceType...) -> Project {
+    public static func module(name: String, dependencies: [TargetDependency] = [], packages: [Package] = [], resources: ResourceType...) -> Project {
         Project(name: name,
+                packages: packages,
                 targets: [
                     Target(name: name,
                             platform: .iOS,

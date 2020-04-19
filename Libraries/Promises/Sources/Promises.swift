@@ -17,7 +17,7 @@ public final class Promise<T, E: Error> {
         self.state = .rejected(error: error)
     }
     
-    public convenience init(on queue: Queue, _ work: @escaping (Future<T, E>) -> Void) {
+    public convenience init(on queue: Queue = DispatchQueue.global(qos: .userInitiated), _ work: @escaping (Future<T, E>) -> Void) {
         self.init()
         queue.execute {
             work(Future(fulfill: self.fulfill, reject: self.reject))

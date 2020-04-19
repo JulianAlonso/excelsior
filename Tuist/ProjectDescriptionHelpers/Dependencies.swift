@@ -15,8 +15,10 @@ public extension TargetDependency {
     
     //Packages
     static let kingfisher: TargetDependency = .package(product: "Kingfisher")
+    static let promises: TargetDependency = .package(product: "Promises")
 }
 
 public extension Package {
     static let kingfisher: Package = .package(url: "https://github.com/onevcat/Kingfisher", from: "5.1.0")
+    static let promises: Package = .package(url: Path.relativeToRoot("Libraries/Promises").pathString, from: "0.0.0")
 }

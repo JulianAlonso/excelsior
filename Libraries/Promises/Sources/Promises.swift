@@ -23,7 +23,13 @@ public final class Promise<T, E: Error> {
             work(Future(fulfill: self.fulfill, reject: self.reject))
         }
     }
-
+    
+    @discardableResult
+    public func then(on queue: Queue = DispatchQueue.main, _ fulfill: @escaping (T) -> Void, _ reject: @escaping (Error) -> Void = { _ in }) -> Promise<T, E> {
+        addFuture(future: Future(fulfill: fulfill, reject: reject))
+        return self
+    }
+    
     private func fulfill(with value: T) {
         lockQueue.async {
             guard case .pending(let futures) = self.state else { return }

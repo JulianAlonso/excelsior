@@ -24,11 +24,15 @@ public final class Promise<T, E: Error> {
     }
 
     private func fulfill(with value: T) {
-        
+        guard case .pending(let futures) = state else { return }
+        state = .fulfilled(value: value)
+        futures.forEach { $0.fulfill(value) }
     }
 
     private func reject(with error: E) {
-        
+        guard case .pending(let futures) = state else { return }
+        state = .rejected(error: error)
+        futures.forEach { $0.reject(error) }
     }
     
     private func addFuture(future: Future<T, E>) {

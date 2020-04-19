@@ -28,9 +28,19 @@ public final class Promise<T, E: Error> {
     }
     
     @discardableResult
+    public func then<NewValue>(on queue: Queue = DispatchQueue.main,
+                               _ mapValue: @escaping (T) throws -> NewValue) -> Promise<NewValue, E> {
+        map(
+            on: queue,
+            mapValue: { Promise<NewValue, E>(value: try mapValue($0)) },
+            mapError: { Promise<NewValue, E>(error: $0) }
+        )
+    }
+    
+    @discardableResult
     public func map<NewValue, NewError: Error>(on queue: Queue = DispatchQueue.main,
-                                                _ mapValue: @escaping (T) throws -> Promise<NewValue, NewError>,
-                                                _ mapError: @escaping (E) -> NewError) -> Promise<NewValue, NewError> {
+                                               mapValue: @escaping (T) throws -> Promise<NewValue, NewError>,
+                                               mapError: @escaping (E) -> Promise<NewValue, NewError>) -> Promise<NewValue, NewError> {
         Promise<NewValue, NewError> { future in
             self.then(
                 on: queue,
@@ -42,7 +52,7 @@ public final class Promise<T, E: Error> {
                     }
                 },
                 reject: { oldError in
-                    future.reject(mapError(oldError))
+                    mapError(oldError).then(on: queue, fulfill: future.fulfill, reject: future.reject)
                 }
             )
         }

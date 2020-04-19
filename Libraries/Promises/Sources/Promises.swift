@@ -38,6 +38,16 @@ public final class Promise<T, E: Error> {
     }
     
     @discardableResult
+    public func `catch`<NewError: Error>(on queue: Queue = DispatchQueue.main,
+                                         _ mapError: @escaping (E) -> NewError) -> Promise<T, NewError> {
+        map(
+            on: queue,
+            mapValue: { Promise<T, NewError>(value: $0) },
+            mapError: { Promise<T, NewError>(error: mapError($0)) }
+        )
+    }
+    
+    @discardableResult
     public func map<NewValue, NewError: Error>(on queue: Queue = DispatchQueue.main,
                                                mapValue: @escaping (T) throws -> Promise<NewValue, NewError>,
                                                mapError: @escaping (E) -> Promise<NewValue, NewError>) -> Promise<NewValue, NewError> {

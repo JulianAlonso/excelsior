@@ -28,7 +28,28 @@ public final class Promise<T, E: Error> {
     }
     
     @discardableResult
-    public func then(on queue: Queue = DispatchQueue.main, _ fulfill: @escaping (T) -> Void, _ reject: @escaping (Error) -> Void = { _ in }) -> Promise<T, E> {
+    public func map<NewValue, NewError: Error>(on queue: Queue = DispatchQueue.main,
+                                                _ mapValue: @escaping (T) throws -> Promise<NewValue, NewError>,
+                                                _ mapError: @escaping (E) -> NewError) -> Promise<NewValue, NewError> {
+        Promise<NewValue, NewError> { future in
+            self.then(
+                on: queue,
+                fulfill: { oldValue in
+                    do {
+                        try mapValue(oldValue).then(on: queue, fulfill: future.fulfill, reject: future.reject)
+                    } catch let error {
+                        future.reject(error as! NewError)
+                    }
+                },
+                reject: { oldError in
+                    future.reject(mapError(oldError))
+                }
+            )
+        }
+    }
+    
+    @discardableResult
+    private func then(on queue: Queue = DispatchQueue.main, fulfill: @escaping (T) -> Void, reject: @escaping (E) -> Void = { _ in }) -> Promise<T, E> {
         addCallback(callback: Callback(on: queue, fulfill: fulfill, reject: reject))
         return self
     }

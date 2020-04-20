@@ -15,3 +15,33 @@ public protocol APIRequest: Encodable {
     /// Endpoint for this request (the last part of the URL)
     var resourceName: String { get }
 }
+
+extension APIRequest {
+    func endpoint(base url: URL, publicKey: String, privateKey: String) -> URL {
+        guard let baseUrl = URL(string: resourceName, relativeTo: url) else {
+            fatalError("Bad resourceName: \(resourceName)")
+        }
+        
+        var components = URLComponents(url: baseUrl, resolvingAgainstBaseURL: true)!
+        
+        let timestamp = "\(Date().timeIntervalSince1970)"
+        let hash = "\(timestamp)\(privateKey)\(publicKey)".md5
+        let commonQueryItems = [
+            URLQueryItem(name: "ts", value: timestamp),
+            URLQueryItem(name: "hash", value: hash),
+            URLQueryItem(name: "apikey", value: publicKey)
+        ]
+        
+
+        let customQueryItems: [URLQueryItem]
+        do {
+            customQueryItems = try URLQueryItemEncoder.encode(self)
+        } catch {
+            fatalError("Wrong parameters: \(error)")
+        }
+        
+        components.queryItems = commonQueryItems + customQueryItems
+        
+        return components.url!
+    }
+}

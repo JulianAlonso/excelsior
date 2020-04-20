@@ -5,7 +5,6 @@ import Foundation
 
 public typealias ResultCallback<Value> = (Result<Value, Error>) -> Void
 
-/// Implementation of a generic-based Marvel API client
 public class MarvelAPIClient {
     private let baseEndpointUrl = URL(string: "https://gateway.marvel.com:443/v1/public/")!
     private let session = URLSession(configuration: .default)
@@ -18,11 +17,17 @@ public class MarvelAPIClient {
         self.privateKey = privateKey
     }
     
-    /// Sends a request to Marvel servers, calling the completion method when finished
     public func send<T: APIRequest>(_ request: T, completion: @escaping ResultCallback<DataContainer<T.Response>>) {
         let endpoint = request.endpoint(base: baseEndpointUrl, publicKey: publicKey, privateKey: privateKey)
         
         let task = session.dataTask(with: URLRequest(url: endpoint)) { data, response, error in
+            
+            switch (data, response, error) {
+            case let (.some(data), .some(response), _) where response.hasOkStatus: break
+            case let (.some(data), .some(response), _) where !response.hasOkStatus: break
+            default: break
+            }
+            
             if let data = data {
                 do {
                     // Decode the top level response, and look up the decoded response to see
@@ -49,5 +54,13 @@ public class MarvelAPIClient {
             }
         }
         task.resume()
+    }
+}
+
+extension URLResponse {
+    var okStatuses: [Int] { Array(200...300) }
+    var hasOkStatus: Bool {
+        guard let response = self as? HTTPURLResponse else { return false }
+        return okStatuses.contains(response.statusCode)
     }
 }

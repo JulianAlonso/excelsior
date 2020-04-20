@@ -8,3 +8,19 @@ public enum MarvelError: Swift.Error {
     case decoding
     case server(code: Int, message: String)
 }
+
+extension MarvelError: Decodable {
+    
+    private enum CodingKeys: String, CodingKey {
+        case code = "code"
+        case status = "status"
+    }
+    
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        let code = try container.decode(Int.self, forKey: .code)
+        let status = try container.decode(String.self, forKey: .status)
+        self = .server(code: code, message: status)
+    }
+    
+}

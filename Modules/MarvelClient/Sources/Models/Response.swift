@@ -4,5 +4,9 @@
 import Foundation
 
 public struct Response<Body: Decodable>: Decodable {
-    public let body: DataContainer<Body>?
+    public let body: Page<Body>
+    
+    enum CodingKeys: String, CodingKey {
+        case body = "data"
+    }
 }

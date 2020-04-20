@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum Error<T: Decodable>: Swift.Error {
+public enum Error<T: Decodable>: Swift.Error {
     case known(code: Int, body: T)
     case unkown(code: Int, Swift.Error)
     case underlying(Swift.Error)

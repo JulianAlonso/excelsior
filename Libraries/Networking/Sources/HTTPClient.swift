@@ -7,10 +7,10 @@
 
 import Foundation
 
-public typealias ResultCallback<Value> = (Result<Value, Swift.Error>) -> Void
+public typealias Callback<T, E: Swift.Error> = (Result<T, E>) -> Void
 
-public class MarvelAPIClient {
-    private let baseEndpointUrl = URL(string: "https://gateway.marvel.com:443/v1/public/")!
+public class HTTPClient {
+    private let host = URL(string: "https://gateway.marvel.com:443/v1/public/")!
     private let session = URLSession(configuration: .default)
     
     private let publicKey: String
@@ -21,28 +21,28 @@ public class MarvelAPIClient {
         self.privateKey = privateKey
     }
     
-    public func send<T: APIRequest>(_ request: T, completion: @escaping ResultCallback<Page<T.Response>>) {
-        let endpoint = request.endpoint(base: baseEndpointUrl, publicKey: publicKey, privateKey: privateKey)
+    public func perform<T: Decodable, E: Decodable>(_ endpoint: Endpoint, completion: @escaping Callback<T, Error<E>>) {
+        let url = endpoint.encode(to: host)
         
-        let task = session.dataTask(with: URLRequest(url: endpoint)) { data, response, error in
+        let task = session.dataTask(with: url) { data, response, error in
             do {
                 switch (data, response, error) {
                 case let (.some(data), .some(response), _) where response.hasOkStatus:
-                    let body = try JSONDecoder().decode(Response<T.Response>.self, from: data).body
+                    let body = try JSONDecoder().decode(T.self, from: data)
                     completion(.success(body))
                     return
                 case let (.some(data), .some(response), _) where !response.hasOkStatus:
                     let code = response.httpCode!
-                    let error = try JSONDecoder().decode(MarvelError.self, from: data)
-                    completion(.failure(Error.known(code: code, body: error)))
+                    let error = try JSONDecoder().decode(E.self, from: data)
+                    completion(.failure(.known(code: code, body: error)))
                     return
                 case let (_, _, .some(error)):
-                    completion(.failure(Error<MarvelError>.underlying(error)))
+                    completion(.failure(.underlying(error)))
                     return
                 default: fatalError("Impossible")
                 }
             } catch {
-                completion(.failure(Error<MarvelError>.underlying(error)))
+                completion(.failure(.underlying(error)))
             }
         }
         task.resume()

@@ -9,12 +9,17 @@ import Foundation
 
 public struct Endpoint {
     let path: String
-    private(set) var paramters: [String: Any]
+    private(set) var parameters: [String: Any]
+    
+    public init(path: String, parameters: [String: Any] = [:]) {
+        self.path = path
+        self.parameters = parameters
+    }
 }
 
 public extension Endpoint {
     func adding(parameters: [String: Any]) -> Endpoint {
-        .init(path: path, paramters: parameters + parameters)
+        .init(path: path, parameters: self.parameters + parameters)
     }
 }
 
@@ -23,7 +28,7 @@ extension Endpoint {
         let url = host.appendingPathComponent(path)
         var components = URLComponents(url: url, resolvingAgainstBaseURL: false)!
         
-        components.queryItems = paramters.map { URLQueryItem(name: $0.key, value: "\($0.value)") }
+        components.queryItems = parameters.map { URLQueryItem(name: $0.key, value: "\($0.value)") }
         
         return components.url!
     }

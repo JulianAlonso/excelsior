@@ -26,7 +26,7 @@ public struct Character {
 }
 
 extension Character {
-    init(withResponse comicCharacter: ComicCharacter) {
+    init(withResponse comicCharacter: Character) {
         id = comicCharacter.id
         name = comicCharacter.name ?? "Unknown name"
         bio = comicCharacter.description ?? "There is no bio for this character"

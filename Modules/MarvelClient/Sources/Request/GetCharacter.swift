@@ -4,7 +4,7 @@
 import Foundation
 
 public struct GetCharacter: APIRequest {
-    public typealias Response = [ComicCharacter]
+    public typealias Response = [Character]
     
     // Notice how we create a composed resourceName
     public var resourceName: String {

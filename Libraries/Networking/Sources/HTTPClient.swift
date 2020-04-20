@@ -10,19 +10,19 @@ import Foundation
 public typealias Callback<T, E: Swift.Error> = (Result<T, E>) -> Void
 
 public class HTTPClient {
-    private let host = URL(string: "https://gateway.marvel.com:443/v1/public/")!
-    private let session = URLSession(configuration: .default)
     
-    private let publicKey: String
-    private let privateKey: String
+    private let host: URL
+    private let session: URLSession
+    private let authorization: Authorizating
     
-    public init(publicKey: String, privateKey: String) {
-        self.publicKey = publicKey
-        self.privateKey = privateKey
+    public init(host: URL, session: URLSession, authorization: Authorizating) {
+        self.host = host
+        self.session = session
+        self.authorization = authorization
     }
     
     public func perform<T: Decodable, E: Decodable>(_ endpoint: Endpoint, completion: @escaping Callback<T, Error<E>>) {
-        let url = endpoint.encode(to: host)
+        let url = authorization.authorize(endpoint: endpoint).encode(to: host)
         
         let task = session.dataTask(with: url) { data, response, error in
             do {

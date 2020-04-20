@@ -3,7 +3,7 @@
 
 import Foundation
 
-public typealias ResultCallback<Value> = (Result<Value, Error>) -> Void
+public typealias ResultCallback<Value> = (Result<Value, Swift.Error>) -> Void
 
 public class MarvelAPIClient {
     private let baseEndpointUrl = URL(string: "https://gateway.marvel.com:443/v1/public/")!
@@ -27,32 +27,8 @@ public class MarvelAPIClient {
             case let (.some(data), .some(response), _) where !response.hasOkStatus: break
             default: break
             }
-            
-            if let data = data {
-                do {
-                    // Decode the top level response, and look up the decoded response to see
-                    // if it's a success or a failure
-                    let marvelResponse = try JSONDecoder().decode(MarvelResponse<T.Response>.self, from: data)
-                    
-                    if let dataContainer = marvelResponse.data {
-                        completion(.success(dataContainer))
-                    } else if let message = marvelResponse.message {
-                        var code = 0
-                        if let httpResponse = response as? HTTPURLResponse {
-                            code = httpResponse.statusCode
-                        }
-                        completion(.failure(MarvelError.server(code: code,
-                                                               message: message)))
-                    } else {
-                        completion(.failure(MarvelError.decoding))
-                    }
-                } catch {
-                    completion(.failure(error))
-                }
-            } else if let error = error {
-                completion(.failure(error))
-            }
         }
+        
         task.resume()
     }
 }

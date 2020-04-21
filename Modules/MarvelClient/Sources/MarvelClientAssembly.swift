@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Networking
 
 public final class MarvelClientAssembly{
     //This should be in other part
@@ -17,6 +18,7 @@ public final class MarvelClientAssembly{
     
     public init() {}
     
-//    public lazy var apiClient : MarvelAPIClient = MarvelAPIClient(publicKey: Constants.publicKey,
-//                                                             privateKey: Constants.privateKey)
+    private let authorization: Authorizating = Authorization(publicKey: Constants.publicKey, privateKey: Constants.privateKey)
+    private lazy var client: HTTPPerforming = HTTPClient(host: URL(string: "https://gateway.marvel.com")!, session: .shared, authorization: authorization)
+    public lazy var characterProvider: CharacterProviding = CharacterProvider(client: client)
 }

@@ -47,7 +47,7 @@ public final class CharactersListKitAssembly {
     }
     
     func getCharacters() -> GetCharacters {
-        GetCharacters(characterRepository: dataProviders.CharactersRepository,
+        GetCharacters(characterRepository: dataProviders.charactersRepository,
                       schedulerFactory: GCDSchedulerFactory())
     }
     

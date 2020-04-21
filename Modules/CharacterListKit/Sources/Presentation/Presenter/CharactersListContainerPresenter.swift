@@ -15,8 +15,6 @@ final class CharactersListContainerPresenter{
     
     private let getCharacters: GetCharactersProtocol
     
-    //TODO: Implement search
-    private var searchString: String?
     private var offset = 0
     private var characters: [CharacterListModel] = []
     // Flag to avoid concurrent calls
@@ -41,8 +39,7 @@ private extension CharactersListContainerPresenter {
         
         loading = true
         /// Interactor returns always in main thread
-        getCharacters.execute(nameStartsWith: searchString,
-                              offset: offset) { [weak self] result in
+        getCharacters.execute(offset: offset) { [weak self] result in
                                 guard let s = self else { return }
                                 s.loading = false
                                 switch result {

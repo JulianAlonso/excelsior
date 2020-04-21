@@ -40,7 +40,7 @@ public final class AppCoreKitAssembly {
     private lazy var commonUIKit = CommonUIKitAssembly()
     
     // SetUp data providers
-    private lazy var dataProviders = DataProvidersAssembly(apiClient: marvelAPI.apiClient)
+    private lazy var dataProviders = DataProvidersAssembly(characterProvider: marvelAPI.characterProvider)
     
     private let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()

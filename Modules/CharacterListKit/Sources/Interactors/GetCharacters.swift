@@ -16,9 +16,7 @@ import Support
 /// - Character -> CharacterLisrModel
 /// - CharacterRepositoryError -> CharacterListError
 protocol GetCharactersProtocol: AnyObject {
-    func execute(nameStartsWith: String?,
-                 offset: Int?,
-                 completion: @escaping (Result<[CharacterListModel], CharacterListError>) -> Void)
+    func execute(offset: Int?, completion: @escaping (Result<[CharacterListModel], CharacterListError>) -> Void)
 }
 
 class GetCharacters{
@@ -33,11 +31,8 @@ class GetCharacters{
 }
 
 extension GetCharacters: GetCharactersProtocol {
-    func execute(nameStartsWith name: String?,
-                 offset: Int?,
-                 completion: @escaping (Result<[CharacterListModel], CharacterListError>) -> Void) {
-        characterRepository.characters(nameStartsWith: name,
-                                       offset: offset) { [weak self] result in
+    func execute(offset: Int?, completion: @escaping (Result<[CharacterListModel], CharacterListError>) -> Void) {
+        characterRepository.characters(offset: offset) { [weak self] result in
                                         self?.mainThreadScheduler.scheduleAsync {
                                             switch result {
                                             case .success(let characters):

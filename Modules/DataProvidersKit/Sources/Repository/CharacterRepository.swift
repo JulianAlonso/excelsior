@@ -10,7 +10,7 @@ import Foundation
 import Support
 
 public protocol CharacterRepository: AnyObject {
-    func characters(nameStartsWith: String?, offset: Int?, completion: @escaping Done<[Character], CharacterRepositoryError>)
+    func characters(offset: Int?, completion: @escaping Done<[Character], CharacterRepositoryError>)
     func character(with id: Int, completion: @escaping Done<Character, CharacterRepositoryError>)
 }
 
@@ -19,21 +19,16 @@ class InternalCharacterRepository {
     let characterService: CharacterServicing
     
     init(characterService: CharacterServicing) {
-        //TODO: Implement multicast delegate to inform to upper layers that the data has been updated")
         self.characterService = characterService
     }
 }
 
 extension InternalCharacterRepository: CharacterRepository{
-    func characters(nameStartsWith: String?,
-                    offset: Int?,
-                    completion: @escaping Done<[Character], CharacterRepositoryError>) {
-        //TODO: Implement an storage with the retrieved data to limit network calls when the characters are already loaded (for the detail)
-        characterService.characters(nameStartsWith: nameStartsWith, offset: offset, completion: completion)
+    func characters(offset: Int?, completion: @escaping Done<[Character], CharacterRepositoryError>) {
+        characterService.characters(offset: offset, completion: completion)
     }
     
     func character(with id: Int, completion: @escaping Done<Character, CharacterRepositoryError>) {
-        //TODO: Check at the storage if the character is already loaded
         characterService.character(with: id, completion: completion)
     }
 }

@@ -46,7 +46,7 @@ public final class CharacterDetailKitAssembly {
     }
     
     func getCharacterDetail() -> GetCharacterDetail {
-        GetCharacterDetail(characterRepository: dataProviders.CharactersRepository,
+        GetCharacterDetail(characterRepository: dataProviders.charactersRepository,
                            schedulerFactory: GCDSchedulerFactory())
     }
     

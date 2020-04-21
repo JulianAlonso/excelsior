@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import DataProvidersKit
+import Core
 
 typealias CharacterId = Int
 

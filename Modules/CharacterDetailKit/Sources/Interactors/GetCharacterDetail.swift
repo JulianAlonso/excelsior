@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import DataProvidersKit
+import Core
 import Support
 
 /// GetCharacterDetail returns in the **main thread** the details of a character given their ID

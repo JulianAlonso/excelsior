@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import DataProvidersKit
+import Core
 
 enum CharacterListError: Error {
     case notFound

@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import DataProvidersKit
+import Core
 import Support
 
 /// GetCharacters returns in the **main thread** the characters with the properties inditated in the params

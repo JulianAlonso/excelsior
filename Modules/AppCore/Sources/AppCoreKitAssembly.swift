@@ -11,7 +11,7 @@ import NavigatorKit
 import DisplayKit
 import CharacterListKit
 import CharacterDetailKit
-import DataProvidersKit
+import Core
 import MarvelClient
 import UIKit
 

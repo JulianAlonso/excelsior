@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import DataProvidersKit
+import Core
 
 struct CharacterListModel: Equatable {
     public let id: Int

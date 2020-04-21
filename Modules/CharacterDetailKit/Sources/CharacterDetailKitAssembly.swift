@@ -10,7 +10,7 @@ import Foundation
 import NavigatorKit
 import UIKit
 import DisplayKit
-import DataProvidersKit
+import Core
 import Support
 
 /// This is the assembly for the feature - Character detail.

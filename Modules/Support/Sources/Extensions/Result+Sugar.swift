@@ -14,5 +14,17 @@ public extension Result {
         case .failure(let error): return .failure(transform(error))
         }
     }
+    
+    func tryMap<NewSuccess, NewFailure>(transformSuccess: (Success) throws -> NewSuccess,
+                                        transformFailure: (Failure) -> NewFailure) -> Result<NewSuccess, NewFailure> {
+        do {
+            switch self {
+            case .success(let success): return .success(try transformSuccess(success))
+            case .failure(let error): return .failure(transformFailure(error))
+            }
+        } catch {
+            return .failure(error as! NewFailure)
+        }
+    }
 }
 

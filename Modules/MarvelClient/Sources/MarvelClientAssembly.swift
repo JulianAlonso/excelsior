@@ -17,6 +17,6 @@ public final class MarvelClientAssembly{
     
     public init() {}
     
-    public lazy var apiClient : MarvelAPIClient = MarvelAPIClient(publicKey: Constants.publicKey,
-                                                             privateKey: Constants.privateKey)
+//    public lazy var apiClient : MarvelAPIClient = MarvelAPIClient(publicKey: Constants.publicKey,
+//                                                             privateKey: Constants.privateKey)
 }

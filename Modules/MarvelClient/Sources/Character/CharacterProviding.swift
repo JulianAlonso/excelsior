@@ -10,8 +10,8 @@ import Support
 import Networking
 
 public protocol CharacterProviding {
-    func characters(_ done: Done<[Character], MarvelError>)
-    func character(by id: Int, _ done: Done<Character, MarvelError>)
+    func characters(_ done: @escaping Done<[Character], MarvelError>)
+    func character(by id: Int, _ done: @escaping Done<[Character], MarvelError>)
 }
 
 public final class CharacterProvider: CharacterProviding {
@@ -22,22 +22,22 @@ public final class CharacterProvider: CharacterProviding {
         self.client = client
     }
     
-    public func characters(_ done: (Result<[Character], MarvelError>) -> Void) {
+    public func characters(_ done: @escaping (Result<[Character], MarvelError>) -> Void) {
         client.perform(Endpoint(path: "/v1/public/characters")) { (result: Result<Page<[Character]>, Error<MarvelError>>) in
-            
+            done(result.map(\.results).mapTerror(\.marvelError))
         }
     }
     
-    public func character(by id: Int, _ done: (Result<Character, MarvelError>) -> Void) {
+    public func character(by id: Int, _ done: @escaping (Result<[Character], MarvelError>) -> Void) {
         client.perform(Endpoint(path: "/v1/public/characters/\(id)")) { (result: Result<Page<[Character]>, Error<MarvelError>>) in
-            
+            done(result.map(\.results).mapTerror(\.marvelError))
         }
     }
     
 }
 
 
-extension Error where T: MarvelError {
+extension Error where T == MarvelError {
     var marvelError: MarvelError {
         switch self {
         case .known(_, let body): return body

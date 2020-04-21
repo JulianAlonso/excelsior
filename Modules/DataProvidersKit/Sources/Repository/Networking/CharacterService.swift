@@ -35,27 +35,11 @@ extension CharacterService: CharacterServicing {
     
     func character(with id: Int, completion: @escaping Done<Character, CharacterRepositoryError>) {
         provider.character(by: id) { result in
-            completion(result
-                .map { $0.first.map { Character(withResponse: $0) } ?? "Error" }
-                .mapTerror(\.repositoryError)
+            completion(result.tryMap(
+                transformSuccess: { try $0.first.map { Character(withResponse: $0) } ?? CharacterRepositoryError.notFound },
+                transformFailure: { $0.repositoryError })
             )
         }
-//        let request = GetCharacter(characterId: id)
-//        apiClient.send(request) { response in
-//            switch response {
-//            case .success(let dataContainer):
-//                let networkCharacters = dataContainer.results
-//                guard let networkCharacter = networkCharacters.first else {
-//                    completion(.failure(.notFound))
-//                    return
-//                }
-//                let character = Character(withResponse: networkCharacter)
-//
-//                completion(.success(character))
-//            case .failure(let error):
-//                completion(.failure(CharacterRepositoryError(withResponseError: error)))
-//            }
-//        }
     }
 }
 

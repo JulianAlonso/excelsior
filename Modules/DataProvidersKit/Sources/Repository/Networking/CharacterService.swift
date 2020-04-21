@@ -8,12 +8,11 @@
 
 import Foundation
 import MarvelClient
+import Support
 
 protocol CharacterServicing: AnyObject {
-    func characters(nameStartsWith: String?,
-                    offset: Int?,
-                    completion: @escaping CharactersCompletion)
-    func character(with id: Int, completion: @escaping CharacterCompletion)
+    func characters(nameStartsWith: String?, offset: Int?, completion: @escaping Done<[Character], CharacterRepositoryError>)
+    func character(with id: Int, completion: @escaping Done<Character, CharacterRepositoryError>)
 }
 
 class CharacterService {
@@ -27,7 +26,7 @@ class CharacterService {
 extension CharacterService: CharacterServicing {
     func characters(nameStartsWith: String?,
                     offset: Int?,
-                    completion: @escaping CharactersCompletion) {
+                    completion: @escaping Done<[Character], CharacterRepositoryError>) {
         
         let request = GetCharacters(name: nil,
                                     nameStartsWith: nameStartsWith,
@@ -50,7 +49,7 @@ extension CharacterService: CharacterServicing {
         }
     }
     
-    func character(with id: Int, completion: @escaping CharacterCompletion) {
+    func character(with id: Int, completion: @escaping Done<Character, CharacterRepositoryError>) {
         let request = GetCharacter(characterId: id)
         apiClient.send(request) { response in
             switch response {

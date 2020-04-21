@@ -7,15 +7,11 @@
 //
 
 import Foundation
-
-public typealias CharacterCompletion = (_ result: Result<Character, CharacterRepositoryError>) -> Void
-public typealias CharactersCompletion = (_ result: Result<[Character], CharacterRepositoryError>) -> Void
+import Support
 
 public protocol CharacterRepository: AnyObject {
-    func characters(nameStartsWith: String?,
-                    offset: Int?,
-                    completion: @escaping CharactersCompletion)
-    func character(with id: Int, completion: @escaping CharacterCompletion)
+    func characters(nameStartsWith: String?, offset: Int?, completion: @escaping Done<[Character], CharacterRepositoryError>)
+    func character(with id: Int, completion: @escaping Done<Character, CharacterRepositoryError>)
 }
 
 class InternalCharacterRepository {
@@ -31,12 +27,12 @@ class InternalCharacterRepository {
 extension InternalCharacterRepository: CharacterRepository{
     func characters(nameStartsWith: String?,
                     offset: Int?,
-                    completion: @escaping CharactersCompletion) {
+                    completion: @escaping Done<[Character], CharacterRepositoryError>) {
         //TODO: Implement an storage with the retrieved data to limit network calls when the characters are already loaded (for the detail)
         characterService.characters(nameStartsWith: nameStartsWith, offset: offset, completion: completion)
     }
     
-    func character(with id: Int, completion: @escaping CharacterCompletion) {
+    func character(with id: Int, completion: @escaping Done<Character, CharacterRepositoryError>) {
         //TODO: Check at the storage if the character is already loaded
         characterService.character(with: id, completion: completion)
     }

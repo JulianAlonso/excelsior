@@ -14,20 +14,3 @@ public enum CharacterRepositoryError: Error {
     case marvelError(code: Int, message: String)
     case unknow(Error)
 }
-
-extension CharacterRepositoryError {
-    init(withResponseError error: Error) {
-        switch error {
-        case let marvelAPIError as MarvelError:
-            switch marvelAPIError {
-            case let .server(code, message):
-                self = .marvelError(code: code, message: message)
-            default:
-                self = .unknow(error)
-            }
-        default:
-            self = .unknow(error)
-        }
-    }
-}
-

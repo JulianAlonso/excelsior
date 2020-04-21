@@ -25,23 +25,12 @@ final class CharacterService {
 
 extension CharacterService: CharacterServicing {
     func characters(offset: Int?, completion: @escaping Done<[Character], CharacterRepositoryError>) {
-        provider.characters { result in
-            switch result {
-            case .success(let dataContainer):
-                let networkCharacters = dataContainer.results
-                guard networkCharacters.count != 0 else {
-                    completion(.failure(.notFound))
-                    return
-                }
-                
-                let characters = networkCharacters.map { Character(withResponse: $0)}
-                
-                completion(.success(characters))
-            case .failure(let error):
-                completion(.failure(CharacterRepositoryError(withResponseError: error)))
-            }
+        provider.characters(offset: offset) { result in
+            completion(result
+                .map { $0.map { Character(withResponse: $0) } }
+                .mapTerror(\.repositoryError)
+            )
         }
-        
     }
     
     func character(with id: Int, completion: @escaping Done<Character, CharacterRepositoryError>) {
@@ -60,6 +49,15 @@ extension CharacterService: CharacterServicing {
             case .failure(let error):
                 completion(.failure(CharacterRepositoryError(withResponseError: error)))
             }
+        }
+    }
+}
+
+extension MarvelError {
+    var repositoryError: CharacterRepositoryError {
+        switch self {
+        case .server(let code, let message): return .marvelError(code: code, message: message)
+        case .underlying(let error): return .unknow(error)
         }
     }
 }

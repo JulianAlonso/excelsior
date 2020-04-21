@@ -20,9 +20,9 @@ public protocol CharacterRepository: AnyObject {
 
 class InternalCharacterRepository {
     
-    let characterService: CharacterServiceProtocol
+    let characterService: CharacterServicing
     
-    init(characterService: CharacterServiceProtocol) {
+    init(characterService: CharacterServicing) {
         //TODO: Implement multicast delegate to inform to upper layers that the data has been updated")
         self.characterService = characterService
     }

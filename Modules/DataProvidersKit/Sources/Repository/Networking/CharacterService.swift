@@ -9,7 +9,7 @@
 import Foundation
 import MarvelClient
 
-protocol CharacterServiceProtocol: AnyObject {
+protocol CharacterServicing: AnyObject {
     func characters(nameStartsWith: String?,
                     offset: Int?,
                     completion: @escaping CharactersCompletion)
@@ -24,7 +24,7 @@ class CharacterService {
     }
 }
 
-extension CharacterService: CharacterServiceProtocol {
+extension CharacterService: CharacterServicing {
     func characters(nameStartsWith: String?,
                     offset: Int?,
                     completion: @escaping CharactersCompletion) {

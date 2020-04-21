@@ -2,5 +2,5 @@ import ProjectDescription
 import ProjectDescriptionHelpers
 
 let project = Project.module(name: "CharacterDetailKit",
-                             dependencies: [.displayKit, .core],
+                             dependencies: [.displayKit, .marvelClient],
                              resources: .xibs, .storyboards, .assets)

@@ -2,6 +2,6 @@ import ProjectDescription
 import ProjectDescriptionHelpers
 
 let project = Project.module(name: "CharacterListKit",
-                             dependencies: [.displayKit, .core],
+                             dependencies: [.displayKit, .marvelClient],
                              packages: [.kingfisher],
                              resources: .storyboards, .assets)

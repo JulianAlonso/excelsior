@@ -9,7 +9,7 @@ import Foundation
 
 public typealias Callback<T, E: Swift.Error> = (Result<T, E>) -> Void
 
-public class HTTPClient {
+public class HTTPClient: HTTPPerforming {
     
     private let host: URL
     private let session: URLSession

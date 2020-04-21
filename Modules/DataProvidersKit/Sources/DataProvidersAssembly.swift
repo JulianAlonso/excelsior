@@ -11,13 +11,12 @@ import MarvelClient
 
 public class DataProvidersAssembly {
     
-    private let apiClient: MarvelAPIClient
+    private let characterProvider: CharacterProviding
     
-    public init(apiClient: MarvelAPIClient) {
-        self.apiClient = apiClient
+    public init(characterProvider: CharacterProviding) {
+        self.characterProvider = characterProvider
     }
     
-    public lazy var CharactersRepository: CharacterRepository =  InternalCharacterRepository(characterService: characterService)
-    
-    private lazy var characterService: CharacterServiceProtocol = CharacterService(apiClient: apiClient)
+    public lazy var charactersRepository: CharacterRepository = InternalCharacterRepository(characterService: characterServicing)
+    public lazy var characterServicing: CharacterServicing = CharacterService(provider: characterProvider)
 }

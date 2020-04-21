@@ -10,7 +10,7 @@ import Foundation
 import MarvelClient
 import Support
 
-protocol CharacterServicing: AnyObject {
+public protocol CharacterServicing: AnyObject {
     func characters(offset: Int?, completion: @escaping Done<[Character], CharacterRepositoryError>)
     func character(with id: Int, completion: @escaping Done<Character, CharacterRepositoryError>)
 }

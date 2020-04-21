@@ -1,5 +1,5 @@
 import ProjectDescription
 import ProjectDescriptionHelpers
 
-let project = Project.module(name: "DataProvidersKit",
+let project = Project.module(name: "Core",
                              dependencies: [.marvelClient])

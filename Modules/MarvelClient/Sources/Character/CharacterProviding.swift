@@ -10,7 +10,7 @@ import Support
 import Networking
 
 public protocol CharacterProviding {
-    func characters(_ done: @escaping Done<[Character], MarvelError>)
+    func characters(offset: Int?, _ done: @escaping Done<[Character], MarvelError>)
     func character(by id: Int, _ done: @escaping Done<[Character], MarvelError>)
 }
 
@@ -22,8 +22,8 @@ public final class CharacterProvider: CharacterProviding {
         self.client = client
     }
     
-    public func characters(_ done: @escaping (Result<[Character], MarvelError>) -> Void) {
-        client.perform(Endpoint(path: "/v1/public/characters")) { (result: Result<Page<[Character]>, Error<MarvelError>>) in
+    public func characters(offset: Int?, _ done: @escaping (Result<[Character], MarvelError>) -> Void) {
+        client.perform(Endpoint(path: "/v1/public/characters", parameters: ["offset": offset ?? 0])) { (result: Result<Page<[Character]>, Error<MarvelError>>) in
             done(result.map(\.results).mapTerror(\.marvelError))
         }
     }

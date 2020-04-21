@@ -11,7 +11,7 @@ import MarvelClient
 import Support
 
 protocol CharacterServicing: AnyObject {
-    func characters(nameStartsWith: String?, offset: Int?, completion: @escaping Done<[Character], CharacterRepositoryError>)
+    func characters(offset: Int?, completion: @escaping Done<[Character], CharacterRepositoryError>)
     func character(with id: Int, completion: @escaping Done<Character, CharacterRepositoryError>)
 }
 

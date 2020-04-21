@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import MarvelClient
 
 public enum CharacterRepositoryError: Error {
     case notFound

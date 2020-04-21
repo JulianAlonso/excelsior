@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import MarvelClient
 import Support
 
 public protocol CharacterServicing: AnyObject {

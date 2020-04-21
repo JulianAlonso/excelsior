@@ -7,6 +7,7 @@ public enum MarvelError: Swift.Error {
     case encoding
     case decoding
     case server(code: Int, message: String)
+    case underlying(Error)
 }
 
 extension MarvelError: Decodable {

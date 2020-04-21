@@ -35,3 +35,14 @@ public final class CharacterProvider: CharacterProviding {
     }
     
 }
+
+
+extension Error where T: MarvelError {
+    var marvelError: MarvelError {
+        switch self {
+        case .known(_, let body): return body
+        case .unkown(_, let error): return .underlying(error)
+        case .underlying(let error): return .underlying(error)
+        }
+    }
+}

@@ -16,6 +16,5 @@ public class DataProvidersAssembly {
         self.characterProvider = characterProvider
     }
     
-    public lazy var charactersRepository: CharacterRepository = InternalCharacterRepository(characterService: characterServicing)
-    public lazy var characterServicing: CharacterServicing = CharacterService(provider: characterProvider)
+    public lazy var charactersRepository: CharacterRepository = InternalCharacterRepository(provider: characterProvider)
 }

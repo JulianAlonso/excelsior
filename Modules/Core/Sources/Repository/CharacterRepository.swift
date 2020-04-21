@@ -14,21 +14,20 @@ public protocol CharacterRepository: AnyObject {
     func character(with id: Int, completion: @escaping Done<Character, CharacterRepositoryError>)
 }
 
-class InternalCharacterRepository {
+final class InternalCharacterRepository {
+    let provider: CharacterProviding
     
-    let characterService: CharacterServicing
-    
-    init(characterService: CharacterServicing) {
-        self.characterService = characterService
+    init(provider: CharacterProviding) {
+        self.provider = provider
     }
 }
 
-extension InternalCharacterRepository: CharacterRepository{
+extension InternalCharacterRepository: CharacterRepository {
     func characters(offset: Int?, completion: @escaping Done<[Character], CharacterRepositoryError>) {
-        characterService.characters(offset: offset, completion: completion)
+        provider.characters(offset: offset, completion)
     }
     
     func character(with id: Int, completion: @escaping Done<Character, CharacterRepositoryError>) {
-        characterService.character(with: id, completion: completion)
+        provider.character(by: id, completion)
     }
 }

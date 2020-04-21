@@ -1,5 +1,5 @@
 //
-//  CharacterProviding.swift
+//  CharacterService.swift
 //  MarvelClient
 //
 //  Created by Juli Alonso on 21/04/2020.
@@ -10,7 +10,12 @@ import Support
 import Networking
 import Core
 
-public final class CharacterProvider: CharacterProviding {
+public protocol CharacterServicing {
+    func characters(offset: Int?, _ done: @escaping (Result<[Character], MarvelError>) -> Void)
+    func character(by id: Int, _ done: @escaping (Result<[Character], MarvelError>) -> Void)
+}
+
+public final class CharacterService: CharacterServicing {
     
     private let client: HTTPPerforming
     
@@ -32,13 +37,11 @@ public final class CharacterProvider: CharacterProviding {
     
 }
 
-
-extension Error where T == MarvelError {
-    var marvelError: MarvelError {
+extension MarvelError {
+    var repositoryError: CharacterRepositoryError {
         switch self {
-        case .known(_, let body): return body
-        case .unkown(_, let error): return .underlying(error)
-        case .underlying(let error): return .underlying(error)
+        case .server(let code, let message): return .marvelError(code: code, message: message)
+        case .underlying(let error): return .unknow(error)
         }
     }
 }

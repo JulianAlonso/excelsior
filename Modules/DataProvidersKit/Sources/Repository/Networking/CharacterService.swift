@@ -15,24 +15,18 @@ protocol CharacterServicing: AnyObject {
     func character(with id: Int, completion: @escaping Done<Character, CharacterRepositoryError>)
 }
 
-class CharacterService {
-    let apiClient: MarvelAPIClient
+final class CharacterService {
+    let provider: CharacterProviding
     
-    init(apiClient: MarvelAPIClient) {
-        self.apiClient = apiClient
+    init(provider: CharacterProviding) {
+        self.provider = provider
     }
 }
 
 extension CharacterService: CharacterServicing {
-    func characters(nameStartsWith: String?,
-                    offset: Int?,
-                    completion: @escaping Done<[Character], CharacterRepositoryError>) {
-        
-        let request = GetCharacters(name: nil,
-                                    nameStartsWith: nameStartsWith,
-                                    offset: offset)
-        apiClient.send(request) { response in
-            switch response {
+    func characters(offset: Int?, completion: @escaping Done<[Character], CharacterRepositoryError>) {
+        provider.characters { result in
+            switch result {
             case .success(let dataContainer):
                 let networkCharacters = dataContainer.results
                 guard networkCharacters.count != 0 else {
@@ -47,6 +41,7 @@ extension CharacterService: CharacterServicing {
                 completion(.failure(CharacterRepositoryError(withResponseError: error)))
             }
         }
+        
     }
     
     func character(with id: Int, completion: @escaping Done<Character, CharacterRepositoryError>) {

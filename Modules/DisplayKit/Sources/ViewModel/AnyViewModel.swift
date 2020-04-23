@@ -22,4 +22,8 @@ public final class AnyViewModel<State, Action> {
         viewModel.handle(action)
     }
     
+    public func subscribe<V: StatefulView>(view: V) where V.State == State {
+        viewModel.subscribe(view: view)
+    }
+    
 }

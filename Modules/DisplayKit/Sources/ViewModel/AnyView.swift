@@ -7,13 +7,13 @@
 
 import Foundation
 
-public final class AnyView<State>: StatefulView {
+public final class AnyStatefulView<State>: StatefulView {
     
     private let _render: (State) -> Void
     private let identifier: String
     
     public init<V: StatefulView>(view: V) where V.State == State {
-        _render = { view.render(state: $0) }
+        _render = { [weak view] state in view?.render(state: state) }
         identifier = String(describing: view)
     }
     
@@ -23,12 +23,12 @@ public final class AnyView<State>: StatefulView {
     
 }
 
-extension AnyView: Hashable {
+extension AnyStatefulView: Hashable {
     public func hash(into hasher: inout Hasher) {
         hasher.combine(identifier)
     }
     
-    public static func == (lhs: AnyView, rhs: AnyView) -> Bool {
+    public static func == (lhs: AnyStatefulView, rhs: AnyStatefulView) -> Bool {
         lhs.identifier == rhs.identifier
     }
 }

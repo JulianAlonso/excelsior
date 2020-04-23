@@ -7,7 +7,7 @@
 
 import Foundation
 
-public protocol StatefulView {
+public protocol StatefulView: AnyObject {
     associatedtype State
     
     func render(state: State)
@@ -16,7 +16,7 @@ public protocol StatefulView {
 open class ViewModel<State, Action> {
     
     public private(set) var state: State
-    private var views = Set<AnyView<State>>()
+    private var views = Set<AnyStatefulView<State>>()
     
     public init(state: State) {
         self.state = state
@@ -29,6 +29,6 @@ open class ViewModel<State, Action> {
     }
     
     final public func subscribe<V: StatefulView>(view: V) where V.State == State {
-        views.insert(AnyView(view: view))
+        views.insert(AnyStatefulView(view: view))
     }
 }

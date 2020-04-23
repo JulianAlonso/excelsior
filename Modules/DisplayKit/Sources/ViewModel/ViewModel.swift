@@ -16,6 +16,7 @@ public protocol StatefulView {
 open class ViewModel<State, Action> {
     
     public private(set) var state: State
+    private var views = Set<AnyView<State>>()
     
     public init(state: State) {
         self.state = state
@@ -27,4 +28,7 @@ open class ViewModel<State, Action> {
         self.state = state
     }
     
+    final public func subscribe<V: StatefulView>(view: V) where V.State == State {
+        views.insert(AnyView(view: view))
+    }
 }

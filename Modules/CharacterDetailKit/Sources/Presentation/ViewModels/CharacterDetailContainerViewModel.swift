@@ -9,7 +9,7 @@
 import Foundation
 import DisplayKit
 
-final class CharacterDetailViewModel: ViewModel<CharacterDetailState, CharacterDetailAction> {
+final class CharacterDetailContainerViewModel: ViewModel<CharacterDetailState, CharacterDetailAction> {
     private let getCharacterDetail: GetCharacterDetail
     private let characterId: CharacterId
     
@@ -31,7 +31,7 @@ final class CharacterDetailViewModel: ViewModel<CharacterDetailState, CharacterD
     }
 }
 
-private extension CharacterDetailViewModel {
+private extension CharacterDetailContainerViewModel {
     func loadCharacterDetail() {
         getCharacterDetail.execute(with: characterId) { result in
             switch result {
@@ -57,7 +57,7 @@ private extension CharacterDetailViewModel {
     }
 }
 
-extension CharacterDetailViewModel: RetryViewControllerDelegate {
+extension CharacterDetailContainerViewModel: RetryViewControllerDelegate {
     func retryViewDidTapOnButton() {
         load()
     }

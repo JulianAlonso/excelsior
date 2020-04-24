@@ -34,8 +34,8 @@ public final class CharacterDetailKitAssembly {
     
     private lazy var detailScreen = CharacterDetailScreen(characterDetailContainerViewControllerProvider: self)
 
-    func characterDetailViewModel(for characterId: CharacterId) -> CharacterDetailViewModel {
-        CharacterDetailViewModel(state: .loading("Initial"),
+    func characterDetailContainerViewModel(for characterId: CharacterId) -> CharacterDetailContainerViewModel {
+        CharacterDetailContainerViewModel(state: .loading("Initial"),
                                  getCharacterDetail: getCharacterDetail(),
                                  characterId: characterId)
     }
@@ -51,8 +51,8 @@ public final class CharacterDetailKitAssembly {
                            schedulerFactory: GCDSchedulerFactory())
     }
     
-    func characterDetailPresenter(character: CharacterDetail) -> CharacterDetailPresenter {
-        CharacterDetailPresenter(character: character)
+    func detailViewModel(_ detail: CharacterDetail) -> ViewModel<CharacterDetailDisplayModel, Never> {
+        CharacterDetailViewModel(state: detail.displayModel)
     }
     
 }
@@ -64,14 +64,14 @@ extension CharacterDetailKitAssembly: CharacterDetailContainerViewControllerProv
         
         let storyboard = UIStoryboard(name: CharacterDetailContainerViewController.storyboard, bundle: bundle)
         return CharacterDetailContainerViewController.createWith(storyboard: storyboard,
-                                                                 viewModel: AnyViewModel(viewModel: characterDetailViewModel(for: characterId)),
+                                                                 viewModel: AnyViewModel(viewModel: characterDetailContainerViewModel(for: characterId)),
                                                                  characterDetailViewControllerFactory: characterDetailViewControllerFactory())
     }
 }
 
 extension CharacterDetailKitAssembly: CharacterDetailViewControllerProvider {
     func characterDetailViewController(character: CharacterDetail) -> CharacterDetailViewController {
-        CharacterDetailViewController(characterDetailPresenter: characterDetailPresenter(character: character))
+        CharacterDetailViewController(viewModel: AnyViewModel(viewModel: detailViewModel(character)))
     }
 }
 
@@ -79,5 +79,11 @@ extension CharacterDetailKitAssembly: CharacterDetailNavigatorProvider {
     public func characterDetailNavigator() -> CharacterDetailNavigator {
         InternalCharacterDetailNavigator(mainNavigator: mainNavigator,
                                          detailScreen: detailScreen)
+    }
+}
+
+extension CharacterDetail {
+    var displayModel: CharacterDetailDisplayModel {
+        .init(name: name, bio: bio, image: thumbnailURL)
     }
 }

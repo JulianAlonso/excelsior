@@ -9,7 +9,7 @@ import Foundation
 
 public final class AnyViewModel<State, Action> {
     
-    var state: State {
+    public var state: State {
         get { viewModel.state }
     }
     private let viewModel: ViewModel<State, Action>

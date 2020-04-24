@@ -8,6 +8,7 @@
 
 import UIKit
 import Kingfisher
+import DisplayKit
 
 protocol CharacterDetailViewControllerProvider: AnyObject {
     func characterDetailViewController(character: CharacterDetail) -> CharacterDetailViewController
@@ -19,20 +20,17 @@ struct CharacterDetailDisplayModel {
     let image: URL?
 }
 
-class CharacterDetailViewController: UIViewController {
+final class CharacterDetailViewController: UIViewController {
 
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var bioLabel: UILabel!
     
-    // Dependencies
+    private let viewModel: AnyViewModel<CharacterDetailDisplayModel, Never>
     
-    private let presenter: CharacterDetailPresenter
-
-    init(characterDetailPresenter: CharacterDetailPresenter) {
-        presenter = characterDetailPresenter
+    init(viewModel: AnyViewModel<CharacterDetailDisplayModel, Never>) {
+        self.viewModel = viewModel
         super.init(nibName: "CharacterDetailViewController", bundle: Bundle(for: CharacterDetailViewController.self))
-        presenter.view = self
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -41,13 +39,20 @@ class CharacterDetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        self.render(state: viewModel.state)
         imageView.accessibilityIdentifier = "CharacterDetailViewController"
-        presenter.didLoad()
     }
 }
 
-extension CharacterDetailViewController: CharacterDetailView {
+extension CharacterDetailViewController: StatefulView {
+    func render(state: CharacterDetailDisplayModel) {
+        setUpName(state.name)
+        setUpBio(state.bio)
+        setUpImage(state.image)
+    }
+}
+
+private extension CharacterDetailViewController {
     func setUpName(_ name: String) {
         nameLabel.text = name
     }

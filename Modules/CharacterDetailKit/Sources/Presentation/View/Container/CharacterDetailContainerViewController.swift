@@ -28,25 +28,21 @@ final class CharacterDetailContainerViewController: UIViewController {
     static let storyboard = "CharacterDetailContainer"
     static let viewController = "CharacterDetailContainerViewController"
     
+    private var viewModel: AnyViewModel<CharacterDetailState, CharacterDetailAction>?
     private var childViewController: UIViewController?
-    
-    private var characterDetailContainerPresenter: CharacterDetailContainerPresenter! {
-        didSet {
-            characterDetailContainerPresenter.view = self
-        }
-    }
     private var characterDetailViewControllerFactory: CharacterDetailViewControllerFactory!
     
     static func createWith(storyboard: UIStoryboard,
-                           characterDetailContainerPresenter: CharacterDetailContainerPresenter,
+                           viewModel: AnyViewModel<CharacterDetailState, CharacterDetailAction>,
                            characterDetailViewControllerFactory: CharacterDetailViewControllerFactory) -> CharacterDetailContainerViewController {
         guard let characterDetailContainerVC = storyboard.instantiateViewController(withIdentifier: CharacterDetailContainerViewController.viewController) as? CharacterDetailContainerViewController  else {
             fatalError("Can't create characterDetailContainerVC from storyboard")
         }
         
         // setup dependencies
-        characterDetailContainerVC.characterDetailContainerPresenter = characterDetailContainerPresenter
+        characterDetailContainerVC.viewModel = viewModel
         characterDetailContainerVC.characterDetailViewControllerFactory = characterDetailViewControllerFactory
+        viewModel.subscribe(view: characterDetailContainerVC)
         
         return characterDetailContainerVC
     }
@@ -54,7 +50,7 @@ final class CharacterDetailContainerViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        characterDetailContainerPresenter.didLoad()
+        viewModel?.handle(.load)
     }
 }
 

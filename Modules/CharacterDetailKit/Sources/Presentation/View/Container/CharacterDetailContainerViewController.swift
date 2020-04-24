@@ -8,14 +8,19 @@
 
 import Foundation
 import UIKit
+import DisplayKit
 
 protocol CharacterDetailContainerViewControllerProvider: class {
     func characterDetailContainerViewController(characterId: CharacterId) -> CharacterDetailContainerViewController
 }
 
-/// CharacterDetailContainerViewController is the container for all possible character states (loading, loaded or error)
-/// Each view state is representer in a different view controller that is presented as a child view controller.
-class CharacterDetailContainerViewController: UIViewController {
+enum CharacterDetailState {
+    case loading(String)
+    case loaded(CharacterDetail)
+    case loadError(title: String, description: String, delegate: RetryViewControllerDelegate)
+}
+
+final class CharacterDetailContainerViewController: UIViewController {
     static let storyboard = "CharacterDetailContainer"
     static let viewController = "CharacterDetailContainerViewController"
     
@@ -50,8 +55,8 @@ class CharacterDetailContainerViewController: UIViewController {
     }
 }
 
-extension CharacterDetailContainerViewController: CharacterDetailContainerView {
-    func showView(forState state: CharacterDetailState) {
+extension CharacterDetailContainerViewController: StatefulView {
+    func render(state: CharacterDetailState) {
         let viewController = characterDetailViewControllerFactory.viewController(forState: state)
         setContentViewController(viewController,
                                  in: view,

@@ -16,32 +16,25 @@ import Support
 /// - Character -> CharacterDetail
 /// - CharacterRepositoryError -> CharacterDetailError
 protocol GetCharacterDetailProtocol: AnyObject {
-    func execute(with id: CharacterId,
-                 completion: @escaping (Result<CharacterDetail, CharacterDetailError>) -> Void)
+    func execute(with id: CharacterId, completion: @escaping Done<CharacterDetail, CharacterDetailError>)
 }
 
-class GetCharacterDetail{
+final class GetCharacterDetail {
     let characterRepository: CharacterRepository
-    let mainThreadScheduler: Scheduler
     
-    init(characterRepository: CharacterRepository,
-         schedulerFactory: SchedulerFactory) {
+    init(characterRepository: CharacterRepository) {
         self.characterRepository = characterRepository
-        mainThreadScheduler = schedulerFactory.mainThreadScheduler
     }
 }
 
 extension GetCharacterDetail: GetCharacterDetailProtocol {
-    func execute(with id: CharacterId,
-                 completion: @escaping (Result<CharacterDetail, CharacterDetailError>) -> Void) {
-        characterRepository.character(with: id) { [weak self] result in
-            self?.mainThreadScheduler.scheduleAsync {
-                switch result {
-                case .success(let character):
-                    completion(.success(CharacterDetail(with: character)))
-                case .failure(let repoError):
-                    completion(.failure(CharacterDetailError(characterRepositoryError: repoError)))
-                }
+    func execute(with id: CharacterId, completion: @escaping Done<CharacterDetail, CharacterDetailError>) {
+        characterRepository.character(with: id) { result in
+            switch result {
+            case .success(let character):
+                completion(.success(CharacterDetail(with: character)))
+            case .failure(let repoError):
+                completion(.failure(CharacterDetailError(characterRepositoryError: repoError)))
             }
         }
     }

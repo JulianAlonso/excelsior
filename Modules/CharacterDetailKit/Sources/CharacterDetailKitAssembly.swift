@@ -47,8 +47,7 @@ public final class CharacterDetailKitAssembly {
     }
     
     func getCharacterDetail() -> GetCharacterDetail {
-        GetCharacterDetail(characterRepository: dataProviders.charactersRepository,
-                           schedulerFactory: GCDSchedulerFactory())
+        GetCharacterDetail(characterRepository: dataProviders.charactersRepository)
     }
     
     func detailViewModel(_ detail: CharacterDetail) -> ViewModel<CharacterDetailDisplayModel, Never> {

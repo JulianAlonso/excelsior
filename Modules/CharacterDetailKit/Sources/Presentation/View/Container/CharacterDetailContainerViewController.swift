@@ -20,6 +20,10 @@ enum CharacterDetailState {
     case loadError(title: String, description: String, delegate: RetryViewControllerDelegate)
 }
 
+enum CharacterDetailAction {
+    case load
+}
+
 final class CharacterDetailContainerViewController: UIViewController {
     static let storyboard = "CharacterDetailContainer"
     static let viewController = "CharacterDetailContainerViewController"
@@ -50,7 +54,6 @@ final class CharacterDetailContainerViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         characterDetailContainerPresenter.didLoad()
     }
 }

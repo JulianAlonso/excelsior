@@ -10,7 +10,7 @@ import Foundation
 import DisplayKit
 
 /// CharacterDetailContainerPresenter in the presenter in charge of retrieve details for a character and set the view into the right state
-final class CharacterDetailContainerPresenter{
+final class CharacterDetailContainerPresenter {
     weak var view: CharacterDetailContainerView!
     
     private let getCharacterDetail: GetCharacterDetail

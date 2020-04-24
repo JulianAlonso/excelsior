@@ -13,6 +13,12 @@ protocol CharacterDetailViewControllerProvider: AnyObject {
     func characterDetailViewController(character: CharacterDetail) -> CharacterDetailViewController
 }
 
+struct CharacterDetailDisplayModel {
+    let name: String
+    let bio: String
+    let image: URL?
+}
+
 class CharacterDetailViewController: UIViewController {
 
     @IBOutlet weak var imageView: UIImageView!

@@ -26,6 +26,7 @@ open class ViewModel<State, Action> {
     
     final public func update(state: State) {
         self.state = state
+        views.forEach { $0.render(state: state) }
     }
     
     final public func subscribe<V: StatefulView>(view: V) where V.State == State {

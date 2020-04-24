@@ -34,9 +34,10 @@ public final class CharacterDetailKitAssembly {
     
     private lazy var detailScreen = CharacterDetailScreen(characterDetailContainerViewControllerProvider: self)
 
-    func characterDetailContainerPresenter(for characterId: CharacterId) -> CharacterDetailContainerPresenter {
-        CharacterDetailContainerPresenter(getCharacterDetail: getCharacterDetail(),
-                                          characterId: characterId)
+    func characterDetailViewModel(for characterId: CharacterId) -> CharacterDetailViewModel {
+        CharacterDetailViewModel(state: .loading("Initial"),
+                                 getCharacterDetail: getCharacterDetail(),
+                                 characterId: characterId)
     }
     
     func characterDetailViewControllerFactory() -> CharacterDetailViewControllerFactory {
@@ -63,7 +64,7 @@ extension CharacterDetailKitAssembly: CharacterDetailContainerViewControllerProv
         
         let storyboard = UIStoryboard(name: CharacterDetailContainerViewController.storyboard, bundle: bundle)
         return CharacterDetailContainerViewController.createWith(storyboard: storyboard,
-                                                                 characterDetailContainerPresenter: characterDetailContainerPresenter(for: characterId),
+                                                                 viewModel: AnyViewModel(viewModel: characterDetailViewModel(for: characterId)),
                                                                  characterDetailViewControllerFactory: characterDetailViewControllerFactory())
     }
 }

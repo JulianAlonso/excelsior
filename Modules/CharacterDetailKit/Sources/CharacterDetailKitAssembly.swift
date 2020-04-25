@@ -13,8 +13,6 @@ import DisplayKit
 import Core
 import Support
 
-/// This is the assembly for the feature - Character detail.
-
 public final class CharacterDetailKitAssembly {
     
     private let commonUIKit: CommonUIKitAssembly

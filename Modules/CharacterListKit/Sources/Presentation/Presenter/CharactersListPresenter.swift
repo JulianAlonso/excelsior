@@ -8,6 +8,7 @@
 
 import Foundation
 import DisplayKit
+import NavigatorKit
 
 protocol CharactersListPresenterDelegate: AnyObject {
     func loadMore()
@@ -19,13 +20,12 @@ final class CharactersListPresenter {
     
     weak var delegate: CharactersListPresenterDelegate?
     
-    // MARK: - Dependencies
-    private let navigator: CharacterDetailNavigator
+    private let detailNavigation: (Int) -> Void
     
     init(characters: [CharacterListModel],
-         navigator: CharacterDetailNavigator) {
+         detailNavigation: @escaping (Int) -> Void) {
         self.characters = characters
-        self.navigator = navigator
+        self.detailNavigation = detailNavigation
     }
 }
 
@@ -45,7 +45,7 @@ extension CharactersListPresenter {
         
     func characterSelected(at index: Int) {
         let character = characters[index]
-        navigator.navigateToCharacterDetail(withIdentifier: character.id)
+        detailNavigation(character.id)
     }
 }
 

@@ -31,8 +31,6 @@ public final class CharacterDetailKitAssembly {
         self.dateFormmater = dateFormmater
         self.mainNavigator = mainNavigator
     }
-    
-    private lazy var detailScreen = CharacterDetailScreen(characterDetailContainerViewControllerProvider: self)
 
     func characterDetailContainerViewModel(for characterId: CharacterId) -> CharacterDetailContainerViewModel {
         CharacterDetailContainerViewModel(state: .loading("Initial"),
@@ -71,13 +69,6 @@ extension CharacterDetailKitAssembly: CharacterDetailContainerViewControllerProv
 extension CharacterDetailKitAssembly: CharacterDetailViewControllerProvider {
     func characterDetailViewController(character: CharacterDetail) -> CharacterDetailViewController {
         CharacterDetailViewController(viewModel: AnyViewModel(viewModel: detailViewModel(character)))
-    }
-}
-
-extension CharacterDetailKitAssembly: CharacterDetailNavigatorProvider {
-    public func characterDetailNavigator() -> CharacterDetailNavigator {
-        InternalCharacterDetailNavigator(mainNavigator: mainNavigator,
-                                         detailScreen: detailScreen)
     }
 }
 

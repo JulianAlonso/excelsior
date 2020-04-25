@@ -8,6 +8,7 @@
 
 import UIKit
 import NavigatorKit
+import Injection
 
 final class AppDelegate: UIResponder, UIApplicationDelegate {
     
@@ -15,6 +16,11 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
     var navigator: Navigator?
 
     public func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+            
+        injectMe {
+            component { marvelComponent }
+            component { repositoryComponent }
+        }
         
         self.window = AppCoreKitAssembly.current.window
         self.navigator = AppCoreKitAssembly.current.navigator

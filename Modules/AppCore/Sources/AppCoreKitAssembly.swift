@@ -34,7 +34,7 @@ public final class AppCoreKitAssembly {
        
     // SetUp the launch coordinator with the first screen
     lazy var appLaunchCoordinator = AppLaunchCoordinator(mainNavigator: mainNavigator,
-                                                                 firstScreen: charactersListKit.mainScreen)
+                                                         firstScreen: .)
     
     // Setup Common UI kit
     private lazy var commonUIKit = CommonUIKitAssembly()
@@ -57,7 +57,11 @@ public final class AppCoreKitAssembly {
     private lazy var charactersListKit = CharactersListKitAssembly(commonUIKit: commonUIKit,
                                                                    dataProviders: dataProviders,
                                                                    dateFormmater: dateFormatter,
-                                                                   characterDetailNavigatorProvider: characterDetailKit
+                                                                   detailNavigation: { characterId in
+                                                                    self.mainNavigator.handle(navigation: .push(.detail(assembly: self.characterDetailKit,
+                                                                                                                   character: characterId)))
+                                                                    
+    }
     )
     // SetUp second feature framework - Character detail
     private lazy var characterDetailKit = CharacterDetailKitAssembly(commonUIKit: commonUIKit,

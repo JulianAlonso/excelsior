@@ -10,9 +10,9 @@ import Foundation
 import NavigatorKit
 import UIKit
 
-extension Screen {
-    static func detail(provider: CharacterDetailContainerViewControllerProvider,
+public extension Screen {
+    static func detail(assembly: CharacterDetailKitAssembly,
                        character id: CharacterId) -> Screen {
-        .init { provider.characterDetailContainerViewController(characterId: id) }
+        .init { assembly.characterDetailContainerViewController(characterId: id) }
     }
 }

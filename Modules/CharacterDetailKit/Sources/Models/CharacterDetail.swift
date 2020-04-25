@@ -9,7 +9,7 @@
 import Foundation
 import Core
 
-typealias CharacterId = Int
+public typealias CharacterId = Int
 
 struct CharacterDetail {
     public let id: CharacterId

@@ -24,8 +24,7 @@ public protocol AppCoreKitAssemblyProviderProtocol {
 
 public final class AppCoreKitAssembly {
     
-    static var current: AppCoreKitAssembly!
-    
+    static var current = AppCoreKitAssembly()
     static let window = UIWindow()
 
     // Setup navigation kit
@@ -64,4 +63,7 @@ public final class AppCoreKitAssembly {
                                                                    dataProviders: dataProviders,
                                                                    dateFormmater: dateFormatter,
                                                                    mainNavigator: navigator)
+    
+    private init() {}
+    
 }

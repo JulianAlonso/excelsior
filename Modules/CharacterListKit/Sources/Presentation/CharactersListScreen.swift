@@ -10,15 +10,8 @@ import Foundation
 import NavigatorKit
 import UIKit
 
-/// CharactersListScreen in the main screen for the character list feature
-class CharactersListScreen: Screen {
-    private unowned let charactersListContainerViewControllerProvider: CharactersListContainerViewControllerProvider
-    
-    init(charactersListContainerViewControllerProvider: CharactersListContainerViewControllerProvider) {
-        self.charactersListContainerViewControllerProvider = charactersListContainerViewControllerProvider
-    }
-    
-    func viewController(with params: ScreenParams?) -> UIViewController {
-        return charactersListContainerViewControllerProvider.charactersListContainerViewController()
+extension Screen {
+    static func list(provider: CharactersListContainerViewControllerProvider) -> Screen {
+        .init { provider.charactersListContainerViewController() }
     }
 }

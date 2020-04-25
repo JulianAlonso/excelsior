@@ -10,8 +10,8 @@ import Foundation
 import NavigatorKit
 import UIKit
 
-extension Screen {
-    static func list(provider: CharactersListContainerViewControllerProvider) -> Screen {
-        .init { provider.charactersListContainerViewController() }
+public extension Screen {
+    static func list(assembly: CharactersListKitAssembly) -> Screen {
+        .init { assembly.charactersListContainerViewController() }
     }
 }

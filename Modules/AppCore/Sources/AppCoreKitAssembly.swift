@@ -34,7 +34,7 @@ public final class AppCoreKitAssembly {
        
     // SetUp the launch coordinator with the first screen
     lazy var appLaunchCoordinator = AppLaunchCoordinator(mainNavigator: mainNavigator,
-                                                         firstScreen: .)
+                                                         firstScreen: .list(assembly: charactersListKit))
     
     // Setup Common UI kit
     private lazy var commonUIKit = CommonUIKitAssembly()

@@ -30,12 +30,8 @@ public final class AppCoreKitAssembly {
 
     // Setup navigation kit
     private lazy var navigatorKit = NavigatorKitAssembly(window: Self.window)
-    private lazy var mainNavigator = navigatorKit.navigator()
+    lazy var navigator = navigatorKit.navigator()
        
-    // SetUp the launch coordinator with the first screen
-    lazy var appLaunchCoordinator = AppLaunchCoordinator(mainNavigator: mainNavigator,
-                                                         firstScreen: .list(assembly: charactersListKit))
-    
     // Setup Common UI kit
     private lazy var commonUIKit = CommonUIKitAssembly()
     
@@ -54,12 +50,12 @@ public final class AppCoreKitAssembly {
     private lazy var marvelAPI = MarvelClientAssembly()
 
     // SetUp first feature framework - Characters list
-    private lazy var charactersListKit = CharactersListKitAssembly(commonUIKit: commonUIKit,
+    lazy var charactersListKit = CharactersListKitAssembly(commonUIKit: commonUIKit,
                                                                    dataProviders: dataProviders,
                                                                    dateFormmater: dateFormatter,
                                                                    detailNavigation: { characterId in
-                                                                    self.mainNavigator.handle(navigation: .push(.detail(assembly: self.characterDetailKit,
-                                                                                                                   character: characterId)))
+                                                                    self.navigator.handle(navigation: .push(.detail(assembly: self.characterDetailKit,
+                                                                                                                    character: characterId)))
                                                                     
     }
     )
@@ -67,5 +63,5 @@ public final class AppCoreKitAssembly {
     private lazy var characterDetailKit = CharacterDetailKitAssembly(commonUIKit: commonUIKit,
                                                                    dataProviders: dataProviders,
                                                                    dateFormmater: dateFormatter,
-                                                                   mainNavigator: mainNavigator)
+                                                                   mainNavigator: navigator)
 }

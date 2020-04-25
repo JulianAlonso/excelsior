@@ -12,13 +12,14 @@ import NavigatorKit
 final class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
-    var navigator: Navigator
+    var navigator: Navigator?
 
     public func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         setUpAppDelegateDependencies()
         setUpWindow()
-        
+        self.navigator = AppCoreKitAssembly.current.navigator
+        navigator?.handle(navigation: .root(.list(assembly: AppCoreKitAssembly.current.charactersListKit)))
         return true
     }
     
@@ -30,9 +31,6 @@ private extension AppDelegate {
         if AppCoreKitAssembly.current == nil {
             AppCoreKitAssembly.current = AppCoreKitAssembly()
         }
-        let appCoreKitAssembly = AppCoreKitAssembly.current!
-        
-        appLaunchCoordinator = appCoreKitAssembly.appLaunchCoordinator
     }
     
     func setUpWindow() {

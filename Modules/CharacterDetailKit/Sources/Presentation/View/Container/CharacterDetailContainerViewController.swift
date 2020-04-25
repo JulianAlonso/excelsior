@@ -10,10 +10,6 @@ import Foundation
 import UIKit
 import DisplayKit
 
-protocol CharacterDetailContainerViewControllerProvider: class {
-    func characterDetailContainerViewController(characterId: CharacterId) -> CharacterDetailContainerViewController
-}
-
 enum CharacterDetailState {
     case loading(String)
     case loaded(CharacterDetail)

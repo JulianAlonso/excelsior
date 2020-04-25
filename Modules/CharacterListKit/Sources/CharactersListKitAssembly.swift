@@ -52,7 +52,7 @@ public final class CharactersListKitAssembly {
     }
 }
 
-extension CharactersListKitAssembly: CharactersListContainerViewControllerProvider {
+extension CharactersListKitAssembly { 
     func charactersListContainerViewController() -> CharactersListContainerViewController {
         let bundle = Bundle(for: CharactersListContainerViewController.self)
 

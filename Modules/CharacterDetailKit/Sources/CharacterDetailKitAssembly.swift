@@ -52,8 +52,7 @@ public final class CharacterDetailKitAssembly {
     
 }
 
-
-extension CharacterDetailKitAssembly: CharacterDetailContainerViewControllerProvider {
+extension CharacterDetailKitAssembly {
     func characterDetailContainerViewController(characterId: CharacterId) -> CharacterDetailContainerViewController {
         let bundle = Bundle(for: CharacterDetailContainerViewController.self)
         

@@ -8,7 +8,7 @@
 
 import Foundation
 import UIKit
-
+import Support
 public protocol Navigator {
     func handle(navigation: Navigation, animated: Bool)
 }
@@ -29,18 +29,16 @@ final class InternalNavigator: Navigator {
     
     func handle(navigation: Navigation, animated: Bool = true) {
         switch navigation {
-        case let .root(screen, params):
-            setRootScreen(screen, with: params)
-        case let .present(screen, params):
-            let viewController = screen.viewController(with: params)
-            presentationViewController().present(
-                viewController,
+        case let .root(screen):
+            setRootScreen(screen)
+        case let .present(screen):
+            presentationViewController.present(
+                screen.build(),
                 animated: animated
             )
-        case let .push(screen, params):
-            let viewController = screen.viewController(with: params)
+        case let .push(screen):
             navigationController.pushViewController(
-                viewController,
+                screen.build(),
                 animated: animated
             )
         }
@@ -48,22 +46,19 @@ final class InternalNavigator: Navigator {
 }
 
 private extension InternalNavigator {
-    func setRootScreen(_ screen: Screen, with params: ScreenParams?) {
-        let viewController = screen.viewController(with: params)
-        navigationController = UINavigationController(rootViewController: viewController)
+    func setRootScreen(_ screen: Screen) {
+        navigationController = UINavigationController(rootViewController: screen.build())
         window.rootViewController = navigationController
         window.makeKeyAndVisible()
     }
     
-    func presentationViewController() -> UIViewController{
-        if let vc = navigationController.visibleViewController {
-            return vc
+    var presentationViewController: UIViewController {
+        guard let vc = navigationController.visibleViewController ??
+            navigationController.topViewController ??
+            navigationController.viewControllers.last
+            else {
+            fatalError("Navigator with empty NavigationController")
         }
-        
-        if let vc = navigationController.topViewController {
-            return vc
-        }
-        
-        return navigationController.viewControllers.last!
+        return vc
     }
 }

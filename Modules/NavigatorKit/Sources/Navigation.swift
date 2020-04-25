@@ -10,16 +10,7 @@ import Foundation
 import UIKit
 
 public enum Navigation {
-    case root(
-        Screen,
-        ScreenParams? = nil
-    )
-    case push(
-        Screen,
-        ScreenParams? = nil
-    )
-    case present(
-        Screen,
-        ScreenParams? = nil
-    )
+    case root(Screen)
+    case push(Screen)
+    case present(Screen)
 }

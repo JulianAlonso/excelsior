@@ -25,10 +25,10 @@ public protocol AppCoreKitAssemblyProviderProtocol {
 public final class AppCoreKitAssembly {
     
     static var current = AppCoreKitAssembly()
-    static let window = UIWindow()
+    let window = UIWindow(frame: UIScreen.main.bounds)
 
     // Setup navigation kit
-    private lazy var navigatorKit = NavigatorKitAssembly(window: Self.window)
+    private lazy var navigatorKit = NavigatorKitAssembly(window: window)
     lazy var navigator = navigatorKit.navigator()
        
     // Setup Common UI kit

@@ -16,28 +16,10 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
 
     public func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
-        setUpAppDelegateDependencies()
-        setUpWindow()
+        self.window = AppCoreKitAssembly.current.window
         self.navigator = AppCoreKitAssembly.current.navigator
         navigator?.handle(navigation: .root(.list(assembly: AppCoreKitAssembly.current.charactersListKit)))
         return true
     }
     
 }
-
-private extension AppDelegate {
-  
-    func setUpAppDelegateDependencies() {
-        if AppCoreKitAssembly.current == nil {
-            AppCoreKitAssembly.current = AppCoreKitAssembly()
-        }
-    }
-    
-    func setUpWindow() {
-        window = AppCoreKitAssembly.window
-        window!.frame = UIScreen.main.bounds
-    }
-    
-}
-
-

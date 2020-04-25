@@ -14,7 +14,7 @@ public final class CharacterProvider: CharacterProviding {
     
     private let service: CharacterServicing
     
-    init(service: CharacterServicing) {
+    public init(service: CharacterServicing) {
         self.service = service
     }
     

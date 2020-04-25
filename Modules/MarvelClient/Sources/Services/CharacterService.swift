@@ -19,7 +19,7 @@ public final class CharacterService: CharacterServicing {
     
     private let client: HTTPPerforming
     
-    init(client: HTTPPerforming) {
+    public init(client: HTTPPerforming) {
         self.client = client
     }
     

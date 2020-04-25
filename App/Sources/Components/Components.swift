@@ -18,3 +18,6 @@ let marvelComponent = Component {
     factory { CharacterProvider(service: $0()) as CharacterProviding }
 }
 
+let repositoryComponent = Component {
+    factory { InternalCharacterRepository(provider: $0()) as CharacterRepository }
+}

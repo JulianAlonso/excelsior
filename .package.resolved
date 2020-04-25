@@ -2,6 +2,15 @@
   "object": {
     "pins": [
       {
+        "package": "Injection",
+        "repositoryURL": "https://github.com/JulianAlonso/Injection",
+        "state": {
+          "branch": null,
+          "revision": "31b985c1eee50f7d3af69a5e71b07996deb0a233",
+          "version": "0.0.3"
+        }
+      },
+      {
         "package": "Kingfisher",
         "repositoryURL": "https://github.com/onevcat/Kingfisher",
         "state": {

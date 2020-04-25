@@ -4,9 +4,11 @@ import ProjectDescriptionHelpers
 let project = Project.module(name: "DisplayKit",
                              dependencies: [
                                 .navigatorKit,
-                                .kingfisher
+                                .kingfisher,
+                                .injection
                              ],
                              packages: [
-                                .kingfisher
+                                .kingfisher,
+                                .injection
                              ],
                              resources: .xibs, .assets)

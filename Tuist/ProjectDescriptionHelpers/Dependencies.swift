@@ -17,10 +17,12 @@ public extension TargetDependency {
     static let kingfisher: TargetDependency = .package(product: "Kingfisher")
     static let promises: TargetDependency = .package(product: "Promises")
     static let networking: TargetDependency = .package(product: "Networking")
+    static let injection: TargetDependency = .package(product: "Injection")
 }
 
 public extension Package {
     static let kingfisher: Package = .package(url: "https://github.com/onevcat/Kingfisher", from: "5.1.0")
     static let promises: Package = .package(url: Path.relativeToRoot("Libraries/Promises").pathString, from: "0.0.0")
     static let networking: Package = .package(url: Path.relativeToRoot("Libraries/Networking").pathString, from: "0.0.0")
+    static let injection: Package = .package(url: "https://github.com/JulianAlonso/Injection", from: "0.0.0")
 }

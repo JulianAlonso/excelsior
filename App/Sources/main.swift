@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import AppCore
 import UIKit
 
 let appDelegateClass: AnyClass

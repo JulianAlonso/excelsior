@@ -12,7 +12,10 @@ let project = Project(name: "Excelsior",
                                  sources: ["Sources/**"],
                                  resources: ["Resources/**"],
                                  actions: [],
-                                 dependencies: [.appCore]),
+                                 dependencies: [
+                                    .characterListKit,
+                                    .characterDetailKit
+                                 ]),
                           Target(name: "Tests",
                                  platform: .iOS,
                                  product: .unitTests,

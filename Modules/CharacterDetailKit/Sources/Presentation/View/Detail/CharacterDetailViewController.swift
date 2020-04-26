@@ -10,10 +10,6 @@ import UIKit
 import Kingfisher
 import DisplayKit
 
-protocol CharacterDetailViewControllerProvider: AnyObject {
-    func characterDetailViewController(character: CharacterDetail) -> CharacterDetailViewController
-}
-
 struct CharacterDetailDisplayModel {
     let name: String
     let bio: String

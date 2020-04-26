@@ -56,9 +56,3 @@ private extension CharacterDetailContainerViewModel {
         loadCharacterDetail()
     }
 }
-
-extension CharacterDetailContainerViewModel: RetryViewControllerDelegate {
-    func retryViewDidTapOnButton() {
-        load()
-    }
-}

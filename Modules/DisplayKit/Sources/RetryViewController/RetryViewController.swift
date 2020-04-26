@@ -14,20 +14,23 @@ public protocol RetryViewControllerProvider: AnyObject {
 }
 
 public class RetryViewController: UIViewController {
-
+    
+    public typealias OnRetry = () -> Void
     public weak var delegate: RetryViewControllerDelegate?
     
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
     
-    private let titleText: String?
+    private let titleText: String
     private let descriptionText: String
+    private let onRetry: OnRetry
     
     public init(title: String,
-                descriptionText: String) {
-        titleText = title
+                descriptionText: String,
+                onRetry: @escaping OnRetry) {
+        self.titleText = title
         self.descriptionText = descriptionText
-        
+        self.onRetry = onRetry
         super.init(nibName: nil, bundle: Bundle(for: type(of: self)))
     }
     
@@ -43,6 +46,6 @@ public class RetryViewController: UIViewController {
     }
 
     @IBAction func retryButtonTapped(_ sender: Any) {
-        delegate?.retryViewDidTapOnButton()
+        onRetry()
     }
 }

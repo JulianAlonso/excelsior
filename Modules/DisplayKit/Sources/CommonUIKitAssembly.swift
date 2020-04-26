@@ -20,6 +20,6 @@ extension CommonUIKitAssembly: LoadingViewControllerProvider {
 
 extension CommonUIKitAssembly: RetryViewControllerProvider {
     public func retryViewController(title: String, descriptionText: String) -> RetryViewController {
-        RetryViewController(title: title, descriptionText: descriptionText)
+        RetryViewController(title: title, descriptionText: descriptionText, onRetry: {})
     }
 }

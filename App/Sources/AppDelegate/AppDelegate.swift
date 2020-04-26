@@ -9,23 +9,25 @@
 import UIKit
 import NavigatorKit
 import Injection
+import CharacterListKit
 
 final class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
-    var navigator: Navigator?
-
+    
     public func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-            
+        
+        self.window = UIWindow(frame: UIScreen.main.bounds)
+        let navigator: Navigating = Navigator(window: window!)
+        
         injectMe {
             component { marvelComponent }
             component { repositoryComponent }
             component { uiComponent }
+            single { navigator }
         }
         
-        self.window = AppCoreKitAssembly.current.window
-        self.navigator = AppCoreKitAssembly.current.navigator
-        navigator?.handle(navigation: .root(.list()))
+        navigator.handle(navigation: .root(.list))
         return true
     }
     

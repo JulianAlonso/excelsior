@@ -39,3 +39,7 @@ public final class CharacterListContainerModuleBuilder: ModuleBuilder<UIViewCont
     }
     
 }
+
+public extension Screen {
+    static let list = Screen { CharacterListContainerModuleBuilder().build() }
+}

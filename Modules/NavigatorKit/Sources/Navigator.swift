@@ -8,27 +8,40 @@
 
 import Foundation
 import UIKit
-import Support
 
-public protocol Navigator {
+public enum Navigation {
+    case root(Screen)
+    case push(Screen)
+    case present(Screen)
+}
+
+public struct Screen {
+    public let build: () -> UIViewController
+    
+    public init(_ builder: @escaping () -> UIViewController) {
+        self.build = builder
+    }
+}
+
+public protocol Navigating {
     func handle(navigation: Navigation, animated: Bool)
 }
 
-public extension Navigator {
+public extension Navigating {
     func handle(navigation: Navigation) {
         handle(navigation: navigation, animated: true)
     }
 }
 
-final class InternalNavigator: Navigator {
+public final class Navigator: Navigating {
     private let window: UIWindow
-    private var navigationController: UINavigationController!
+    private let navigationController = UINavigationController()
     
-    init(window: UIWindow) {
+    public init(window: UIWindow) {
         self.window = window
     }
     
-    func handle(navigation: Navigation, animated: Bool = true) {
+    public func handle(navigation: Navigation, animated: Bool = true) {
         switch navigation {
         case let .root(screen):
             setRootScreen(screen)
@@ -46,9 +59,9 @@ final class InternalNavigator: Navigator {
     }
 }
 
-private extension InternalNavigator {
+private extension Navigator {
     func setRootScreen(_ screen: Screen) {
-        navigationController = UINavigationController(rootViewController: screen.build())
+        navigationController.viewControllers = [screen.build()]
         window.rootViewController = navigationController
         window.makeKeyAndVisible()
     }

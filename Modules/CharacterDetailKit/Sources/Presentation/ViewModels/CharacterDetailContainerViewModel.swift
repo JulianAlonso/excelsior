@@ -48,7 +48,7 @@ private extension CharacterDetailContainerViewModel {
     }
     
     func getCharactersFinished(with error: CharacterDetailError) {
-        update(state: .loadError(title: "Something went wrong", description: error.localizedDescription, delegate: self))
+        update(state: .loadError(title: "Something went wrong", description: error.localizedDescription))
     }
     
     func load() {

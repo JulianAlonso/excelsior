@@ -34,9 +34,9 @@ extension CharacterDetailViewControllerFactory {
         case .loaded(let characterDetail):
             let characterDetailViewController = characterDetailViewControllerProvider.characterDetailViewController(character: characterDetail)
             return characterDetailViewController
-        case let .loadError(title, description, delegate):
+        case let .loadError(title, description):
             let retryViewController = retryViewControllerProvider.retryViewController(title: title, descriptionText: description)
-            retryViewController.delegate = delegate
+//            retryViewController.delegate = delegate
             return retryViewController
         }
     }

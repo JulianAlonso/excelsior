@@ -53,16 +53,15 @@ public final class AppCoreKitAssembly {
                                                                    dataProviders: dataProviders,
                                                                    dateFormmater: dateFormatter,
                                                                    detailNavigation: { characterId in
-                                                                    self.navigator.handle(navigation: .push(.detail(assembly: self.characterDetailKit,
-                                                                                                                    character: characterId)))
+                                                                    self.navigator.handle(navigation: .push(.detail(character: characterId)))
                                                                     
     }
     )
-    // SetUp second feature framework - Character detail
-    private lazy var characterDetailKit = CharacterDetailKitAssembly(commonUIKit: commonUIKit,
-                                                                   dataProviders: dataProviders,
-                                                                   dateFormmater: dateFormatter,
-                                                                   mainNavigator: navigator)
+//    // SetUp second feature framework - Character detail
+//    private lazy var characterDetailKit = CharacterDetailKitAssembly(commonUIKit: commonUIKit,
+//                                                                   dataProviders: dataProviders,
+//                                                                   dateFormmater: dateFormatter,
+//                                                                   mainNavigator: navigator)
     
     private init() {}
     

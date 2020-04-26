@@ -13,7 +13,7 @@ import DisplayKit
 enum CharacterDetailState {
     case loading(String)
     case loaded(CharacterDetail)
-    case loadError(title: String, description: String, delegate: RetryViewControllerDelegate)
+    case loadError(title: String, description: String)
 }
 
 enum CharacterDetailAction {
@@ -24,25 +24,8 @@ final class CharacterDetailContainerViewController: UIViewController {
     static let storyboard = "CharacterDetailContainer"
     static let viewController = "CharacterDetailContainerViewController"
     
-    private var viewModel: AnyViewModel<CharacterDetailState, CharacterDetailAction>?
+    var viewModel: AnyViewModel<CharacterDetailState, CharacterDetailAction>?
     private var childViewController: UIViewController?
-    private var characterDetailViewControllerFactory: CharacterDetailViewControllerFactory!
-    
-    static func createWith(storyboard: UIStoryboard,
-                           viewModel: AnyViewModel<CharacterDetailState, CharacterDetailAction>,
-                           characterDetailViewControllerFactory: CharacterDetailViewControllerFactory) -> CharacterDetailContainerViewController {
-        guard let characterDetailContainerVC = storyboard.instantiateViewController(withIdentifier: CharacterDetailContainerViewController.viewController) as? CharacterDetailContainerViewController  else {
-            fatalError("Can't create characterDetailContainerVC from storyboard")
-        }
-        
-        // setup dependencies
-        characterDetailContainerVC.viewModel = viewModel
-        characterDetailContainerVC.characterDetailViewControllerFactory = characterDetailViewControllerFactory
-        viewModel.subscribe(view: characterDetailContainerVC)
-        
-        return characterDetailContainerVC
-    }
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,10 +35,19 @@ final class CharacterDetailContainerViewController: UIViewController {
 
 extension CharacterDetailContainerViewController: StatefulView {
     func render(state: CharacterDetailState) {
-        let viewController = characterDetailViewControllerFactory.viewController(forState: state)
-        setContentViewController(viewController,
-                                 in: view,
-                                 withPreviousViewControler: childViewController)
+        let viewController = self.viewController(for: state)
+        setContentViewController(viewController, in: view, withPreviousViewControler: childViewController)
         childViewController = viewController
+    }
+    
+    private func viewController(for state: CharacterDetailState) -> UIViewController {
+        switch state {
+        case .loading(let detailText):
+            return LoadingModuleBuilder(message: detailText).build()
+        case .loaded(let characterDetail):
+            return CharacterDetailModuleBuilder(detail: characterDetail).build()
+        case let .loadError(title, description):
+            return RetryModuleBuilder(title: title, description: description, onRetry: { self.viewModel?.handle(.load) }).build()
+        }
     }
 }

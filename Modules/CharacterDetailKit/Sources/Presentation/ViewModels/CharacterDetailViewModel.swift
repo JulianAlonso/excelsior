@@ -9,6 +9,4 @@ import Foundation
 import Core
 import DisplayKit
 
-final class CharacterDetailViewModel: ViewModel<CharacterDetailDisplayModel, Never> {
-    
-}
+final class CharacterDetailViewModel: ViewModel<CharacterDetailDisplayModel, Never> {}

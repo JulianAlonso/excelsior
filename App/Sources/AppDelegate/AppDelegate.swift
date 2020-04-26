@@ -20,11 +20,12 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         injectMe {
             component { marvelComponent }
             component { repositoryComponent }
+            component { uiComponent }
         }
         
         self.window = AppCoreKitAssembly.current.window
         self.navigator = AppCoreKitAssembly.current.navigator
-        navigator?.handle(navigation: .root(.list(assembly: AppCoreKitAssembly.current.charactersListKit)))
+        navigator?.handle(navigation: .root(.list()))
         return true
     }
     

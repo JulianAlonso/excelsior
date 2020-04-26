@@ -60,8 +60,7 @@ private extension CharactersListContainerPresenter {
     
     func getCharactersFinished(with error: CharacterListError) {
         view.showView(forState: .loadError(title: "Something was wrong",  //TODO: Localization
-                                           description: error.localizedDescription,
-                                           delegate: self))
+                                           description: error.localizedDescription))
     }
     
     func retry() {

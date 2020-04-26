@@ -37,31 +37,26 @@ public final class AppCoreKitAssembly {
     // SetUp data providers
     private lazy var dataProviders = DataProvidersAssembly(characterProvider: marvelAPI.characterProvider)
     
-    private let dateFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "d MMM yyyy"
-        formatter.locale = .current
-        
-        return formatter
-    }()
+//    private let dateFormatter: DateFormatter = {
+//        let formatter = DateFormatter()
+//        formatter.dateFormat = "d MMM yyyy"
+//        formatter.locale = .current
+//        
+//        return formatter
+//    }()
     
     // SetUp Marvel API client
     private lazy var marvelAPI = MarvelClientAssembly()
 
-    // SetUp first feature framework - Characters list
-    lazy var charactersListKit = CharactersListKitAssembly(commonUIKit: commonUIKit,
-                                                                   dataProviders: dataProviders,
-                                                                   dateFormmater: dateFormatter,
-                                                                   detailNavigation: { characterId in
-                                                                    self.navigator.handle(navigation: .push(.detail(character: characterId)))
-                                                                    
-    }
-    )
-//    // SetUp second feature framework - Character detail
-//    private lazy var characterDetailKit = CharacterDetailKitAssembly(commonUIKit: commonUIKit,
+//    // SetUp first feature framework - Characters list
+//    lazy var charactersListKit = CharactersListKitAssembly(commonUIKit: commonUIKit,
 //                                                                   dataProviders: dataProviders,
 //                                                                   dateFormmater: dateFormatter,
-//                                                                   mainNavigator: navigator)
+//                                                                   detailNavigation: { characterId in
+//                                                                    self.navigator.handle(navigation: .push(.detail(character: characterId)))
+//                                                                    
+//    }
+//    )
     
     private init() {}
     

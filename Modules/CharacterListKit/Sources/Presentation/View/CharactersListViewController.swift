@@ -26,11 +26,11 @@ final class CharactersListViewController: UITableViewController {
     // Dependencies
     
     private let presenter: CharactersListPresenter
-    private let cellBinderProvider: CharacterListCellBinderProvider
+    private let cellBinderProvider: (CharacterListModel) -> CharacterListCellBinder
     private var offset: Int = 0
     
     init(charactersListPresenter: CharactersListPresenter,
-         cellBinderProvider: CharacterListCellBinderProvider,
+         cellBinderProvider: @escaping (CharacterListModel) -> CharacterListCellBinder,
          offset: Int) {
         presenter = charactersListPresenter
         self.cellBinderProvider = cellBinderProvider
@@ -69,7 +69,7 @@ final class CharactersListViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = CharactersListCell.dequeueReusableCell(for: indexPath, from: tableView)
         let character = presenter.character(for: indexPath.row)
-        let binder = cellBinderProvider.binderForCharacter(character: character)
+        let binder = cellBinderProvider(character)
 
         binder.bind(to: cell)
         

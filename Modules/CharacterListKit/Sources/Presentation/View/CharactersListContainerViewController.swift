@@ -13,36 +13,16 @@ import DisplayKit
 /// CharactersListContainerViewController is the container for all possible list states (loading, loaded or error)
 /// Each list state is representer in a diferent view controller that is presented as a child view controller.
 final class CharactersListContainerViewController: UIViewController {
-    static let storyboard = "CharactersListContainer"
-    static let viewController = "CharactersListContainerViewController"
-    
     private var childViewController: UIViewController?
     
-    private var charactersListContainerPresenter: CharactersListContainerPresenter! {
+    var charactersListContainerPresenter: CharactersListContainerPresenter! {
         didSet {
            charactersListContainerPresenter.view = self
         }
     }
-    private var charactersListViewControllerFactory: CharactersListViewControllerFactory!
 
-    static func createWith(storyboard: UIStoryboard,
-                           charactersListContainerPresenter: CharactersListContainerPresenter,
-                           charactersListViewControllerFactory: CharactersListViewControllerFactory) -> CharactersListContainerViewController {
-        guard let charactersListContainerVC = storyboard.instantiateViewController(withIdentifier: CharactersListContainerViewController.viewController) as? CharactersListContainerViewController  else {
-            fatalError("Can't create charactersListContainerVC from storyboard")
-        }
-        
-        // setup dependencies
-        charactersListContainerVC.charactersListContainerPresenter = charactersListContainerPresenter
-        charactersListContainerVC.charactersListViewControllerFactory = charactersListViewControllerFactory
-        
-        return charactersListContainerVC
-    }
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-
         charactersListContainerPresenter.didLoad()
     }
     
@@ -54,10 +34,21 @@ final class CharactersListContainerViewController: UIViewController {
 
 extension CharactersListContainerViewController: CharactersListContainerView {
     func showView(forState state: CharactersListState) {
-        let viewController = charactersListViewControllerFactory.viewController(forState: state)
+        let viewController = self.viewController(for: state)
         setContentViewController(viewController,
                                  in: view,
                                  withPreviousViewControler: childViewController)
         childViewController = viewController
+    }
+    
+    private func viewController(for state: CharactersListState) -> UIViewController {
+        switch state {
+        case .loading(let detailText):
+            return LoadingModuleBuilder(message: detailText).build()
+        case let .charactersList(characters, offset, delegate):
+            return CharacterListModuleBuilder(characters: characters, offset: offset, delegate: delegate, navigation: { _ in }).build()
+        case let .loadError(title, description):
+            return RetryModuleBuilder(title: title, description: description, onRetry: { self.charactersListContainerPresenter.didLoad() }).build()
+        }
     }
 }    

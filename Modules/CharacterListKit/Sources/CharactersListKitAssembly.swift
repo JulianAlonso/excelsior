@@ -12,70 +12,30 @@ import UIKit
 import DisplayKit
 import Core
 import Support
+import Injection
 
-/// This is the assembly for the feature - Characters List.
-
-public final class CharactersListKitAssembly {
+public final class CharacterListContainerModuleBuilder: ModuleBuilder<UIViewController> {
+    private let storyboard = "CharactersListContainer"
+    private let viewController = "CharactersListContainerViewController"
     
-    private let commonUIKit: CommonUIKitAssembly
-    private let dataProviders: DataProvidersAssembly
-    private let dateFormmater: DateFormatter
-    private let detailNavigation: (Int) -> Void
-    
-    public init(commonUIKit: CommonUIKitAssembly,
-                dataProviders: DataProvidersAssembly,
-                dateFormmater: DateFormatter,
-                detailNavigation: @escaping (Int) -> Void) {
-        self.commonUIKit = commonUIKit
-        self.dataProviders = dataProviders
-        self.dateFormmater = dateFormmater
-        self.detailNavigation = detailNavigation
+    public override func component() -> Component? {
+        Component {
+            factory { GCDScheduler(dispatchQueue: DispatchQueue.main, name: "main") as Scheduler}
+            factory { GetCharacters(characterRepository: $0(), mainThreadScheduler: $0()) as GetCharactersProtocol }
+            factory { CharactersListContainerPresenter(getCharacters: $0()) }
+        }
     }
     
-    func charactersListContainerPresenter() -> CharactersListContainerPresenter {
-        CharactersListContainerPresenter(getCharacters: getCharacters())
-    }
-    
-    func charactersListViewControllerFactory() -> CharactersListViewControllerFactory {
-        CharactersListViewControllerFactory(loadingViewControllerProvider: commonUIKit,
-                                            retryViewControllerProvider: commonUIKit,
-                                            charactersListViewControllerProvider: self)
-    }
-    
-    func getCharacters() -> GetCharacters {
-        GetCharacters(characterRepository: dataProviders.charactersRepository,
-                      schedulerFactory: GCDSchedulerFactory())
-    }
-    
-    func charactersListPresenter(characters: [CharacterListModel]) -> CharactersListPresenter {
-        CharactersListPresenter(characters: characters, detailNavigation: detailNavigation)
-    }
-}
-
-extension CharactersListKitAssembly { 
-    func charactersListContainerViewController() -> CharactersListContainerViewController {
+    public override func build() -> UIViewController {
         let bundle = Bundle(for: CharactersListContainerViewController.self)
-
-        let storyboard = UIStoryboard(name: CharactersListContainerViewController.storyboard, bundle: bundle)
-        return CharactersListContainerViewController.createWith(storyboard: storyboard,
-                                                                charactersListContainerPresenter: charactersListContainerPresenter(),
-                                                                charactersListViewControllerFactory: charactersListViewControllerFactory())
+        let storyboard = UIStoryboard(name: self.storyboard, bundle: bundle)
+        guard let list = storyboard.instantiateViewController(withIdentifier: viewController) as? CharactersListContainerViewController  else {
+            fatalError("Can't create charactersListContainerVC from storyboard")
+        }
+        
+        list.charactersListContainerPresenter = module.resolve()
+        
+        return list
     }
-}
-
-extension CharactersListKitAssembly: CharactersListViewControllerProvider {
-    func charactersListViewController(characters: [CharacterListModel], offset: Int, delegate: CharactersListPresenterDelegate) -> CharactersListViewController {
-        let presenter = charactersListPresenter(characters: characters)
-        presenter.delegate = delegate
-        return CharactersListViewController(charactersListPresenter: presenter,
-                                            cellBinderProvider: self,
-                                            offset: offset)
-    }
-}
-
-extension CharactersListKitAssembly: CharacterListCellBinderProvider{
-    /// default implementation of a fake factory
-    func binderForCharacter(character: CharacterListModel) -> CharacterListCellBinder {
-        CharacterListCellBinder(character: character, dateFormatter: dateFormmater)
-    }
+    
 }

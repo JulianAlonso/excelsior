@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import Support
+
 public protocol Navigator {
     func handle(navigation: Navigation, animated: Bool)
 }

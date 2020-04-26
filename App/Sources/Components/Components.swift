@@ -21,3 +21,15 @@ let marvelComponent = Component {
 let repositoryComponent = Component {
     factory { InternalCharacterRepository(provider: $0()) as CharacterRepository }
 }
+
+let uiComponent = Component {
+    single { dateFormatter }
+}
+
+private let dateFormatter: DateFormatter = {
+    let formatter = DateFormatter()
+    formatter.dateFormat = "d MMM yyyy"
+    formatter.locale = .current
+    
+    return formatter
+}()

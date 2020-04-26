@@ -24,9 +24,9 @@ class GetCharacters{
     let mainThreadScheduler: Scheduler
     
     init(characterRepository: CharacterRepository,
-         schedulerFactory: SchedulerFactory) {
+         mainThreadScheduler: Scheduler) {
         self.characterRepository = characterRepository
-        mainThreadScheduler = schedulerFactory.mainThreadScheduler
+        self.mainThreadScheduler = mainThreadScheduler
     }
 }
 

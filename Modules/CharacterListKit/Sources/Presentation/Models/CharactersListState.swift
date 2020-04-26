@@ -15,7 +15,7 @@ enum CharactersListState {
     case charactersList([CharacterListModel],
         offset: Int,
         delegate: CharactersListPresenterDelegate)
-    case loadError(title: String, description: String, delegate: RetryViewControllerDelegate)
+    case loadError(title: String, description: String)
 }
 
 extension CharactersListState: Equatable {

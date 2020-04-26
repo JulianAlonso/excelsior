@@ -14,7 +14,7 @@ public class GCDScheduler {
     private let _name: String
     private let queue: DispatchQueue
     
-    init(dispatchQueue: DispatchQueue,
+    public init(dispatchQueue: DispatchQueue,
          name: String) {
         queue = dispatchQueue
         _name = name

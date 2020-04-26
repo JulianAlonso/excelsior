@@ -11,7 +11,7 @@ import NavigatorKit
 import UIKit
 
 public extension Screen {
-    static func list(assembly: CharactersListKitAssembly) -> Screen {
-        .init { assembly.charactersListContainerViewController() }
+    static func list() -> Screen {
+        .init { CharacterListContainerModuleBuilder().build() }
     }
 }

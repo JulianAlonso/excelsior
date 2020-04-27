@@ -10,6 +10,7 @@ import Injection
 import Networking
 import MarvelClient
 import Core
+import CharacterListKit
 
 let marvelComponent = Component {
     factory { Authorization(publicKey: Environment.publicKey, privateKey: Environment.privateKey) as Authorizating }
@@ -20,6 +21,10 @@ let marvelComponent = Component {
 
 let repositoryComponent = Component {
     factory { InternalCharacterRepository(provider: $0()) as CharacterRepository }
+}
+
+let coordinatorsComponent = Component {
+    factory { CharacterListCoordinator(navigator: $0()) as CharacterListCoordinating }
 }
 
 let uiComponent = Component {

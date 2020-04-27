@@ -15,18 +15,16 @@ final class CharacterListModuleBuilder: ModuleBuilder<UIViewController> {
     private let characters: [CharacterListModel]
     private let offset: Int
     private let delegate: CharactersListPresenterDelegate
-    private let navigation: (Int) -> Void
     
-    init(characters: [CharacterListModel], offset: Int, delegate: CharactersListPresenterDelegate, navigation: @escaping (Int) -> Void) {
+    init(characters: [CharacterListModel], offset: Int, delegate: CharactersListPresenterDelegate) {
         self.characters = characters
         self.offset = offset
         self.delegate = delegate
-        self.navigation = navigation
     }
     
     override func component() -> Component? {
         Component {
-            factory { CharactersListPresenter(characters: self.characters, detailNavigation: self.navigation) }
+            factory { CharactersListPresenter(characters: self.characters, coordinator: $0()) }
             factory { resolver in { CharacterListCellBinder(character: $0, dateFormatter: resolver()) } }
         }
     }

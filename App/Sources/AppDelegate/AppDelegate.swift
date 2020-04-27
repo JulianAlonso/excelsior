@@ -24,6 +24,7 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
             component { marvelComponent }
             component { repositoryComponent }
             component { uiComponent }
+            component { coordinatorsComponent }
             single { navigator }
         }
         

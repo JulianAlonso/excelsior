@@ -20,12 +20,12 @@ final class CharactersListPresenter {
     
     weak var delegate: CharactersListPresenterDelegate?
     
-    private let detailNavigation: (Int) -> Void
+    private let coordinator: CharacterListCoordinating
     
     init(characters: [CharacterListModel],
-         detailNavigation: @escaping (Int) -> Void) {
+         coordinator: CharacterListCoordinating) {
         self.characters = characters
-        self.detailNavigation = detailNavigation
+        self.coordinator = coordinator
     }
 }
 
@@ -45,7 +45,7 @@ extension CharactersListPresenter {
         
     func characterSelected(at index: Int) {
         let character = characters[index]
-        detailNavigation(character.id)
+        coordinator.characterDetail(id: character.id)
     }
 }
 

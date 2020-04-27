@@ -46,7 +46,7 @@ extension CharactersListContainerViewController: CharactersListContainerView {
         case .loading(let detailText):
             return LoadingModuleBuilder(message: detailText).build()
         case let .charactersList(characters, offset, delegate):
-            return CharacterListModuleBuilder(characters: characters, offset: offset, delegate: delegate, navigation: { _ in }).build()
+            return CharacterListModuleBuilder(characters: characters, offset: offset, delegate: delegate).build()
         case let .loadError(title, description):
             return RetryModuleBuilder(title: title, description: description, onRetry: { self.charactersListContainerPresenter.didLoad() }).build()
         }

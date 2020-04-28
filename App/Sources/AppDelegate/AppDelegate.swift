@@ -22,6 +22,7 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         
         injectMe {
             component { marvelComponent }
+            component { storageComponent }
             component { repositoryComponent }
             component { uiComponent }
             component { coordinatorsComponent }

@@ -9,6 +9,8 @@ import Foundation
 
 public final class MemoryCache {
     private let cache = NSCache<WrappedKey, Value>()
+    
+    public init() {}
 }
 
 extension MemoryCache: Caching {

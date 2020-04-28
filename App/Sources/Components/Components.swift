@@ -11,6 +11,7 @@ import Networking
 import MarvelClient
 import Core
 import CharacterListKit
+import Storage
 
 let marvelComponent = Component {
     factory { Authorization(publicKey: Environment.publicKey, privateKey: Environment.privateKey) as Authorizating }
@@ -19,8 +20,12 @@ let marvelComponent = Component {
     factory { CharacterProvider(service: $0()) as CharacterProviding }
 }
 
+let storageComponent = Component {
+    single { MemoryCache() as Caching }
+}
+
 let repositoryComponent = Component {
-    factory { InternalCharacterRepository(provider: $0()) as CharacterRepository }
+    factory { InternalCharacterRepository(provider: $0(), cache: $0()) as CharacterRepository }
 }
 
 let coordinatorsComponent = Component {

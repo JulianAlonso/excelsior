@@ -7,19 +7,19 @@
 
 import Foundation
 
-final class Key: Hashable {
+public final class Key: Hashable {
     
     private let key: String
     
-    init(_ key: String) {
+    public init(_ key: String) {
         self.key = key
     }
     
-    func hash(into hasher: inout Hasher) {
+    public func hash(into hasher: inout Hasher) {
         hasher.combine(key)
     }
     
-    static func == (lhs: Key, rhs: Key) -> Bool {
+    public static func == (lhs: Key, rhs: Key) -> Bool {
         lhs.key == rhs.key
     }
 }

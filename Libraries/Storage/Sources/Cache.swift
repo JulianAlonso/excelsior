@@ -12,12 +12,12 @@ public final class MemoryCache {
 }
 
 extension MemoryCache: Caching {
-    public func set<T>(key: String, value: T) {
-        cache.setObject(Value(value), forKey: Key(key).wrapped)
+    public func set<T>(key: Key, value: T) {
+        cache.setObject(Value(value), forKey: key.wrapped)
     }
     
-    public func get<T>(key: String) -> T? {
-        cache.object(forKey: Key(key).wrapped)?.value as? T
+    public func get<T>(key: Key) -> T? {
+        cache.object(forKey: key.wrapped)?.value as? T
     }
 }
 

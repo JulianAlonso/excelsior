@@ -33,9 +33,16 @@ extension InternalCharacterRepository: CharacterRepository {
     }
     
     public func character(with id: Int, completion: @escaping Done<Character, CharacterRepositoryError>) {
-        provider.character(by: id, completion)
+        if let character = cache.get(id: id as Character.ID) as Character? {
+            completion(.success(character))
+        } else {
+            provider.character(by: id) {
+                completion($0.map { $0.run { self.cache.set(value: $0) } })
+            }
+        }
     }
 }
 
 extension Character: Identifiable {}
 extension Array: Runnable {}
+extension Character: Runnable {}

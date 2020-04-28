@@ -27,10 +27,15 @@ public final class InternalCharacterRepository {
 
 extension InternalCharacterRepository: CharacterRepository {
     public func characters(offset: Int?, completion: @escaping Done<[Character], CharacterRepositoryError>) {
-        provider.characters(offset: offset, completion)
+        provider.characters(offset: offset) { result in
+            completion(result.map { $0.run { $0.forEach { self.cache.set(value: $0) } } } )
+        }
     }
     
     public func character(with id: Int, completion: @escaping Done<Character, CharacterRepositoryError>) {
         provider.character(by: id, completion)
     }
 }
+
+extension Character: Identifiable {}
+extension Array: Runnable {}

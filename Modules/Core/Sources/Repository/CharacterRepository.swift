@@ -8,6 +8,7 @@
 
 import Foundation
 import Support
+import Storage
 
 public protocol CharacterRepository: AnyObject {
     func characters(offset: Int?, completion: @escaping Done<[Character], CharacterRepositoryError>)
@@ -16,9 +17,11 @@ public protocol CharacterRepository: AnyObject {
 
 public final class InternalCharacterRepository {
     let provider: CharacterProviding
+    let cache: Caching
     
-    public init(provider: CharacterProviding) {
+    public init(provider: CharacterProviding, cache: Caching) {
         self.provider = provider
+        self.cache = cache
     }
 }
 

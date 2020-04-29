@@ -8,9 +8,15 @@ let package = Package(
     ],
     products: [
         .library(name: "Networking", targets: ["Networking"]),
+        .library(name: "NetworkingPromises", targets: ["NetworkingPromises"])
+    ],
+    dependencies: [
+        .package(path: "../Promises")
     ],
     targets: [
-        .target(name: "Networking", dependencies: [], path: "Sources"),
-        .testTarget(name: "NetworkingTests", dependencies: ["Networking"], path: "Tests"),
+        .target(name: "Networking", dependencies: []),
+        .target(name: "NetworkingPromises", dependencies: ["Networking", "Promises"]),
+        .testTarget(name: "NetworkingTests", dependencies: ["Networking"]),
+        .testTarget(name: "NetworkingPromisesTests", dependencies: ["NetworkingPromises"])
     ]
 )

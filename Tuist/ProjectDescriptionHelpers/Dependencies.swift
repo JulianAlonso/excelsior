@@ -19,6 +19,7 @@ public extension TargetDependency {
     static let networking: TargetDependency = .package(product: "Networking")
     static let injection: TargetDependency = .package(product: "Injection")
     static let storage: TargetDependency = .package(product: "Storage")
+    static let networkingPromises: TargetDependency = .package(product: "NetworkingPromises")
 }
 
 public extension Package {

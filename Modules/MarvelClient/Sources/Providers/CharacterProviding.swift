@@ -19,21 +19,15 @@ public final class CharacterProvider: CharacterProviding {
     }
     
     public func characters(offset: Int?, _ done: @escaping Done<[Core.Character], CharacterRepositoryError>) {
-        service.characters(offset: offset) { result in
-            done(result
-                .map { $0.map { $0.coreCharacter } }
-                .mapTerror(\.repositoryError)
-            )
-        }
+        service.characters(offset: offset)
+            .then { $0.map(\.coreCharacter) }.then { done(.success($0)) }
+            .catch { $0.repositoryError }.catch { done(.failure($0)) }
     }
     
     public func character(by id: Int, _ done: @escaping Done<Core.Character, CharacterRepositoryError>) {
-        service.character(by: id) { result in
-            done(result.tryMap(
-                transformSuccess: { try $0.first.map { $0.coreCharacter } ?? CharacterRepositoryError.notFound },
-                transformFailure: { $0.repositoryError })
-            )
-        }
+        service.character(by: id)
+            .then { try $0.first.map(\.coreCharacter) ?? CharacterRepositoryError.notFound }.then { done(.success($0)) }
+            .catch { $0.repositoryError }.catch { done(.failure($0)) }
     }
     
 }

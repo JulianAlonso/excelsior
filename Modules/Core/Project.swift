@@ -2,5 +2,5 @@ import ProjectDescription
 import ProjectDescriptionHelpers
 
 let project = Project.module(name: "Core",
-                             dependencies: [.storage],
+                             dependencies: [.storage, .support],
                              packages: [.storage])

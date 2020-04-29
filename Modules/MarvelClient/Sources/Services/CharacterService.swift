@@ -8,11 +8,13 @@
 import Foundation
 import Support
 import Networking
+import NetworkingPromises
+import Promises
 import Core
 
 public protocol CharacterServicing {
-    func characters(offset: Int?, _ done: @escaping (Result<[Character], MarvelError>) -> Void)
-    func character(by id: Int, _ done: @escaping (Result<[Character], MarvelError>) -> Void)
+    func characters(offset: Int?) -> Promise<[Character], MarvelError>
+    func character(by id: Int) -> Promise<[Character], MarvelError>
 }
 
 public final class CharacterService: CharacterServicing {
@@ -23,18 +25,17 @@ public final class CharacterService: CharacterServicing {
         self.client = client
     }
     
-    public func characters(offset: Int?, _ done: @escaping (Result<[Character], MarvelError>) -> Void) {
-        client.perform(Endpoint(path: "/v1/public/characters", parameters: ["offset": offset ?? 0])) { (result: Result<Response<[Character]>, Error<MarvelError>>) in
-            done(result.map(\.body.results).mapTerror(\.marvelError))
-        }
+    public func characters(offset: Int?) -> Promise<[Character], MarvelError> {
+        (client.perform(Endpoint(path: "/v1/public/characters", parameters: ["offset": offset ?? 0])) as Promise<Response<[Character]>, Error<MarvelError>>)
+        .then { $0.body.results }
+        .catch { $0.marvelError }
     }
     
-    public func character(by id: Int, _ done: @escaping (Result<[Character], MarvelError>) -> Void) {
-        client.perform(Endpoint(path: "/v1/public/characters/\(id)")) { (result: Result<Response<[Character]>, Error<MarvelError>>) in
-            done(result.map(\.body.results).mapTerror(\.marvelError))
-        }
+    public func character(by id: Int) -> Promise<[Character], MarvelError> {
+        (client.perform(Endpoint(path: "/v1/public/characters/\(id)")) as Promise<Response<[Character]>, Error<MarvelError>>)
+            .then { $0.body.results }
+            .catch { $0.marvelError }
     }
-    
 }
 
 extension MarvelError {

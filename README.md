@@ -12,7 +12,9 @@ The idea behind this project is to develop an iOS app with an modern scalable ar
 
 ## 💬 Description 
 
-Refactor performed by [@JulianAlonso](https://github.com/julianalonso), you can follow all refactor steps [here](http://diariodeprogramacion.com)
+Refactor performed by [@JulianAlonso](https://github.com/julianalonso), you can follow all refactor steps [here](http://diariodeprogramacion.com/2020/04/15/ios-at-scale-step0-introduction.html)
+
+From original project [excelsior](https://github.com/rafaelbartolome/excelsior)
 
 ### Disclaimer
 
@@ -42,6 +44,7 @@ Main challenge is to define the boundaries of each framework and define who is r
 
 Finally, for this demo I decided to implement a mixed approach, with some horizontal frameworks that provides common functionality and vertical frameworks for each main feature:
 
+After refactor:
 - (REMOVED) **AppCoreKit** (was unuseful) that manages the app lifecycle and initializes all other frameworks.
 - **NavigationKit** that allows us to navigate between features.
 - (RENAMED) **DisplayKit**  with all common views, fonts, styles and assets.
@@ -112,7 +115,7 @@ Feature detail kit are based on Single Data Flow, with reactive view and decoupl
 - Rafael Bartolomé – [@rafaelbartolome](https://twitter.com/rafaelbartolome) – rafa@rafaelbartolome.es
 - Julian Alonso - [@JulianAlonso](https://twitter.com/maisterjuli) - julian.alonso.dev@gmail.com
 
-Most of the ideas from this repo comes from the [blog post series](http//diariodeprogramacion.com)
+Most of the ideas from this repo comes from the [blog post series](http://diariodeprogramacion.com/2020/04/15/ios-at-scale-step0-introduction.html)
 
 ## 📄 License
 

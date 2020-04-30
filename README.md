@@ -6,6 +6,7 @@ The idea behind this project is to develop an iOS app with an scalable architect
 Due to that, some parts are quite over-engineered as the main goal is to design a solid architecture, this code is not production ready.
 
 [![Twitter](https://img.shields.io/badge/main_contributor-Rafael%20Bartolome-orange)](http://twitter.com/rafaelbartolome)
+[![Twitter](https://img.shields.io/badge/posts_contributor-Julian%20Alonso-blue)](http://twitter.com/MaisterJuli)
 [![Swift](https://img.shields.io/badge/swift-5.2-green)](https://swift.org)
 [![License](https://img.shields.io/github/license/rafaelbartolome/excelsior)](LICENSE)
 
@@ -33,7 +34,7 @@ The main objective is not to develop a **perfect** architecture (that's not a re
 
 • **Mixed approach** Why not having the best from both worlds? Well, that's complicated. Creating a mixed approach with horizontal frameworks for common code parts and vertical features has a lot of challenges but it looks as the best approach for big applications.
 Main challenge is to define the boundaries of each framework and define who is responsible of maintain the common parts
-.
+. But using tools like Tuist and SPM to handle this, this tasks could be performed without effort.
 
 ![Vertical frameworks](Doc/mixed-fmw.png)
 
@@ -41,12 +42,15 @@ Main challenge is to define the boundaries of each framework and define who is r
 
 Finally, for this demo I decided to implement a mixed approach, with some horizontal frameworks that provides common functionality and vertical frameworks for each main feature:
 
-- **AppCoreKit** that manages the app lifecycle and initializes all other frameworks.
+- (REMOVED) **AppCoreKit** (was unuseful) that manages the app lifecycle and initializes all other frameworks.
 - **NavigationKit** that allows us to navigate between features.
-- **CommonUIKit**  with all common views, fonts, styles and assets.
-- **ToolsKit** that contains common code, utils, etc.
-- **DataProviders** that implements the repository pattern to hide network or storage complexity to upper layers
-- **APIClient** that contains the Marvel API client used in this demo project
+- (RENAMED) **DisplayKit**  with all common views, fonts, styles and assets.
+- (RENAMED) **Support** that contains common code, utils, etc.
+- (RENAMED) **MarvelClient** that implements the repository pattern to hide network or storage complexity to upper layers
+- (TRANSFORMED TO LIBRARY) **Networking** Networking library
+- (ADDED) **Promises** Promises spm package under development
+- (ADDED) **Core** Main domain module
+- (ADDED) **Storage** A simple package to hide how we storage data. Implemented cache.
 
 ![Frameworks](Doc/frameworks.png)
 
@@ -58,6 +62,8 @@ Is an extension from VIPER architecture, but having the *entities* in *repositor
 For the building of all parts of the app, *Assemblies* are used, that allow dependency inversion through layers due to the injection of dependencies. This approach facilitates testing as all dependencies are injected during the construction of the objects.
 Also most boundaries between layers are defined by protocols to avoid coupling the code. This abstraction also allows to create test doubles for the unit tests.
 
+Feature detail kit are based on Single Data Flow, with reactive view and decoupled ViewModel. The view model handles actions, and update the view based on states.
+
 ![Internal architecture](Doc/architecture.png)
 
 For the API client, there are several public frameworks to consider, like Moya, but finally I decided to use a custom implementation as Moya’s approach doesn’t scale with medium to big teams. With Moya you end up with a single [big enum type](https://github.com/Moya/Moya/blob/master/docs/Examples/Basic.md) that contains lots of details. Merge conflicts within that file will certainly arise, and generally, the end file will be hard to process. The "open/close" principle of SOLID is broken.
@@ -68,6 +74,9 @@ For the API client, there are several public frameworks to consider, like Moya, 
 - [x] Detail of a specific character.
 - [x] Some Unit test
 - [x] Just a few UI test
+- [x] Powered by tuist
+- [x] SPM Packages to share code
+- [x] Swiftier code
 
 ## 😬 Todo 
 
@@ -91,23 +100,21 @@ For the API client, there are several public frameworks to consider, like Moya, 
 
 - **[Repository Pattern](https://martinfowler.com/eaaCatalog/repository.html)** - "Catalog of Patterns of Enterprise Application Architecture" by Edward Hieatt and Rob Mee
 
-- **[Marvel API Client](https://medium.com/makingtuenti/writing-a-scalable-api-client-in-swift-4-b3c6f7f3f3fb)** - "Writing a Scalable API Client in Swift 5"  [Victor Pimentel](https://medium.com/@VictorPimentel)
-
 - **[Navigation](https://jobandtalent.engineering/the-navigator-420b24fc57da)** - "Another twist to iOS navigations" [Ruben Mendez](https://jobandtalent.engineering/@ruben.mendez)
 
 - **[Dependency Injection](https://www.vadimbulavin.com/dependency-injection-in-swift/)** - "Advanced Dependency Injection on iOS with Swift 5" by [Vadim Bulavin](https://www.vadimbulavin.com)
 
 ## 📚 Dependencies
 
+- **[INJECTION](https://github.com/julianalonso/Injection)**
 - **[Kingfisher](https://github.com/onevcat/Kingfisher)**
-
-- **[Marvel API Client](https://medium.com/makingtuenti/writing-a-scalable-api-client-in-swift-4-b3c6f7f3f3fb)**
 
 ## 🍔 Author
 
 - Rafael Bartolomé – [@rafaelbartolome](https://twitter.com/rafaelbartolome) – rafa@rafaelbartolome.es
+- Julian Alonso - [@JulianAlonso](https://twitter.com/maisterjuli) - julian.alonso.dev@gmail.com
 
-Most of the ideas from this repo comes from the *iOS Team* [@TuentiEng](https://twitter.com/TuentiEng)
+Most of the ideas from this repo comes from the [blog post series](http//diariodeprogramacion.com)
 
 ## 📄 License
 

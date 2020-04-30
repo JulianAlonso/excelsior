@@ -1,18 +1,18 @@
 # Excelsior
 ### Just playing with Marvel Open API in a demo project.
 
-The idea behind this project is to develop an iOS app with an scalable architecture, putting into practice several design patterns.
- 
-Due to that, some parts are quite over-engineered as the main goal is to design a solid architecture, this code is not production ready.
+The idea behind this project is to develop an iOS app with an modern scalable architecture, putting into practice several design patterns and techniques.
 
-[![Twitter](https://img.shields.io/badge/main_contributor-Rafael%20Bartolome-orange)](http://twitter.com/rafaelbartolome)
-[![Twitter](https://img.shields.io/badge/posts_contributor-Julian%20Alonso-blue)](http://twitter.com/MaisterJuli)
+[![Twitter](https://img.shields.io/badge/initial_contributor-Rafael%20Bartolome-orange)](http://twitter.com/rafaelbartolome)
+[![Twitter](https://img.shields.io/badge/refactor_contributor-Julian%20Alonso-blue)](http://twitter.com/MaisterJuli)
 [![Swift](https://img.shields.io/badge/swift-5.2-green)](https://swift.org)
 [![License](https://img.shields.io/github/license/rafaelbartolome/excelsior)](LICENSE)
 
 ![Demo](Doc/excelsior.gif)
 
 ## 💬 Description 
+
+Refactor performed by [@JulianAlonso](https://github.com/julianalonso), you can follow all refactor steps [here](http://diariodeprogramacion.com)
 
 ### Disclaimer
 
@@ -64,9 +64,7 @@ Also most boundaries between layers are defined by protocols to avoid coupling t
 
 Feature detail kit are based on Single Data Flow, with reactive view and decoupled ViewModel. The view model handles actions, and update the view based on states.
 
-![Internal architecture](Doc/architecture.png)
-
-For the API client, there are several public frameworks to consider, like Moya, but finally I decided to use a custom implementation as Moya’s approach doesn’t scale with medium to big teams. With Moya you end up with a single [big enum type](https://github.com/Moya/Moya/blob/master/docs/Examples/Basic.md) that contains lots of details. Merge conflicts within that file will certainly arise, and generally, the end file will be hard to process. The "open/close" principle of SOLID is broken.
+![New Intenal Architecture](Doc/graph.png)
 
 ## 📌 Features 
 

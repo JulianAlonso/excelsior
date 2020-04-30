@@ -1,0 +1,43 @@
+digraph "Project Dependencies Graph" {
+  "App" []
+  "CharacterDetailKit" []
+  "CharacterDetailKitUnitTests" []
+  "CharacterListKit" []
+  "CharacterListKitUnitTests" []
+  "Core" []
+  "CoreUnitTests" []
+  "DisplayKit" []
+  "DisplayKitUnitTests" []
+  "MarvelClient" []
+  "MarvelClientUnitTests" []
+  "NavigatorKit" []
+  "NavigatorKitUnitTests" []
+  "Support" []
+  "SupportUnitTests" []
+  "Tests" []
+  "UITest" []
+
+  "App" -> "CharacterListKit"
+  "App" -> "CharacterDetailKit"
+  "CharacterDetailKit" -> "DisplayKit"
+  "CharacterDetailKit" -> "MarvelClient"
+  "CharacterDetailKitUnitTests" -> "CharacterDetailKit"
+  "CharacterListKit" -> "MarvelClient"
+  "CharacterListKit" -> "DisplayKit"
+  "CharacterListKitUnitTests" -> "CharacterListKit"
+  "Core" -> "Support"
+  "Core" -> "NetworkingPromises"
+  "Core" -> "Storage"
+  "CoreUnitTests" -> "Core"
+  "DisplayKit" -> "Injection"
+  "DisplayKit" -> "NavigatorKit"
+  "DisplayKit" -> "Kingfisher"
+  "DisplayKitUnitTests" -> "DisplayKit"
+  "MarvelClient" -> "Core"
+  "MarvelClient" -> "Support"
+  "MarvelClientUnitTests" -> "MarvelClient"
+  "NavigatorKitUnitTests" -> "NavigatorKit"
+  "SupportUnitTests" -> "Support"
+  "Tests" -> "App"
+  "UITest" -> "App"
+}

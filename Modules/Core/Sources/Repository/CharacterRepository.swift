@@ -9,10 +9,11 @@
 import Foundation
 import Support
 import Storage
+import Promises
 
 public protocol CharacterRepository: AnyObject {
-    func characters(offset: Int?, completion: @escaping Done<[Character], CharacterRepositoryError>)
-    func character(with id: Int, completion: @escaping Done<Character, CharacterRepositoryError>)
+    func characters(offset: Int?) -> Promise<[Character], CharacterRepositoryError>
+    func character(with id: Int) -> Promise<Character, CharacterRepositoryError>
 }
 
 public final class InternalCharacterRepository {
@@ -26,19 +27,17 @@ public final class InternalCharacterRepository {
 }
 
 extension InternalCharacterRepository: CharacterRepository {
-    public func characters(offset: Int?, completion: @escaping Done<[Character], CharacterRepositoryError>) {
-        provider.characters(offset: offset) { result in
-            completion(result.map { $0.run { $0.forEach { self.cache.set(value: $0) } } } )
+    public func characters(offset: Int?) -> Promise<[Character], CharacterRepositoryError> {
+        provider.characters(offset: offset).then {
+            $0.forEach { self.cache.set(value: $0) }
         }
     }
     
-    public func character(with id: Int, completion: @escaping Done<Character, CharacterRepositoryError>) {
+    public func character(with id: Int) -> Promise<Character, CharacterRepositoryError> {
         if let character = cache.get(id: id as Character.ID) as Character? {
-            completion(.success(character))
+            return Promise(value: character)
         } else {
-            provider.character(by: id) {
-                completion($0.map { $0.run { self.cache.set(value: $0) } })
-            }
+            return provider.character(by: id).then { self.cache.set(value: $0) }
         }
     }
 }

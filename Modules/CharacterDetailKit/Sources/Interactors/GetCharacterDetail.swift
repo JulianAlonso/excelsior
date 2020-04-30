@@ -9,6 +9,7 @@
 import Foundation
 import Core
 import Support
+import Promises
 
 /// GetCharacterDetail returns in the **main thread** the details of a character given their ID
 /// Also make all transformations between data layer models and presentation models
@@ -16,7 +17,7 @@ import Support
 /// - Character -> CharacterDetail
 /// - CharacterRepositoryError -> CharacterDetailError
 protocol GetCharacterDetailProtocol: AnyObject {
-    func execute(with id: CharacterId, completion: @escaping Done<CharacterDetail, CharacterDetailError>)
+    func execute(with id: CharacterId) -> Promise<CharacterDetail, CharacterDetailError>
 }
 
 final class GetCharacterDetail {
@@ -28,14 +29,9 @@ final class GetCharacterDetail {
 }
 
 extension GetCharacterDetail: GetCharacterDetailProtocol {
-    func execute(with id: CharacterId, completion: @escaping Done<CharacterDetail, CharacterDetailError>) {
-        characterRepository.character(with: id) { result in
-            switch result {
-            case .success(let character):
-                completion(.success(CharacterDetail(with: character)))
-            case .failure(let repoError):
-                completion(.failure(CharacterDetailError(characterRepositoryError: repoError)))
-            }
-        }
+    func execute(with id: CharacterId) -> Promise<CharacterDetail, CharacterDetailError> {
+        characterRepository.character(with: id)
+            .then { CharacterDetail(with: $0) }
+            .catch { CharacterDetailError(characterRepositoryError: $0) }
     }
 }

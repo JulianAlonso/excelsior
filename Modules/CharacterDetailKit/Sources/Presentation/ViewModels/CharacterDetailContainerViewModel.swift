@@ -33,14 +33,9 @@ final class CharacterDetailContainerViewModel: ViewModel<CharacterDetailState, C
 
 private extension CharacterDetailContainerViewModel {
     func loadCharacterDetail() {
-        getCharacterDetail.execute(with: characterId) { result in
-            switch result {
-            case .success(let characterDetail):
-                self.getCharactersFinished(with: characterDetail)
-            case .failure(let error):
-                self.getCharactersFinished(with: error)
-            }
-        }
+        getCharacterDetail.execute(with: characterId)
+            .then(getCharactersFinished)
+            .catch(getCharactersFinished)
     }
     
     func getCharactersFinished(with characterDetail: CharacterDetail) {

@@ -9,6 +9,7 @@ import Foundation
 import Support
 import Networking
 import Core
+import Promises
 
 public final class CharacterProvider: CharacterProviding {
     
@@ -18,16 +19,16 @@ public final class CharacterProvider: CharacterProviding {
         self.service = service
     }
     
-    public func characters(offset: Int?, _ done: @escaping Done<[Core.Character], CharacterRepositoryError>) {
+    public func characters(offset: Int?) -> Promise<[Core.Character], CharacterRepositoryError> {
         service.characters(offset: offset)
-            .then { $0.map(\.coreCharacter) }.then { done(.success($0)) }
-            .catch { $0.repositoryError }.catch { done(.failure($0)) }
+            .then { $0.map(\.coreCharacter) }
+            .catch { $0.repositoryError }
     }
     
-    public func character(by id: Int, _ done: @escaping Done<Core.Character, CharacterRepositoryError>) {
+    public func character(by id: Int) -> Promise<Core.Character, CharacterRepositoryError> {
         service.character(by: id)
-            .then { try $0.first.map(\.coreCharacter) ?? CharacterRepositoryError.notFound }.then { done(.success($0)) }
-            .catch { $0.repositoryError }.catch { done(.failure($0)) }
+            .then { try $0.first.map(\.coreCharacter) ?? CharacterRepositoryError.notFound }
+            .catch { $0.repositoryError }
     }
     
 }

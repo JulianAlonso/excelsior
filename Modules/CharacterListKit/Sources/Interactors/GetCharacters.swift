@@ -9,6 +9,7 @@
 import Foundation
 import Core
 import Support
+import Promises
 
 /// GetCharacters returns in the **main thread** the characters with the properties inditated in the params
 /// Also make all transformations between data layer models and presentation models
@@ -16,7 +17,7 @@ import Support
 /// - Character -> CharacterLisrModel
 /// - CharacterRepositoryError -> CharacterListError
 protocol GetCharactersProtocol: AnyObject {
-    func execute(offset: Int?, completion: @escaping (Result<[CharacterListModel], CharacterListError>) -> Void)
+    func execute(offset: Int?) -> Promise<[CharacterListModel], CharacterListError>
 }
 
 class GetCharacters{
@@ -31,18 +32,9 @@ class GetCharacters{
 }
 
 extension GetCharacters: GetCharactersProtocol {
-    func execute(offset: Int?, completion: @escaping (Result<[CharacterListModel], CharacterListError>) -> Void) {
-        characterRepository.characters(offset: offset) { [weak self] result in
-                                        self?.mainThreadScheduler.scheduleAsync {
-                                            switch result {
-                                            case .success(let characters):
-                                                completion(.success(characters.map{
-                                                    CharacterListModel(with: $0)
-                                                }))
-                                            case .failure(let repoError):
-                                                completion(.failure(CharacterListError(characterRepositoryError: repoError)))
-                                            }
-                                        }
-        }
+    func execute(offset: Int?) -> Promise<[CharacterListModel], CharacterListError> {
+        characterRepository.characters(offset: offset)
+            .then { $0.map { CharacterListModel(with: $0) } }
+            .catch { CharacterListError(characterRepositoryError: $0) }
     }
 }

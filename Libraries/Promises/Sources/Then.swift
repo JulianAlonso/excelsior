@@ -17,4 +17,16 @@ public extension Promise {
             mapError: { Promise<NewValue, E>(error: $0) }
         )
     }
+    
+    func then(on queue: Queue = DispatchQueue.main,
+              _ runValue: @escaping (T) -> Void) -> Promise<T, E> {
+        map(
+            on: queue,
+            mapValue: {
+                runValue($0)
+                return Promise<T, E>(value: $0)
+            },
+            mapError: { Promise<T, E>(error: $0) }
+        )
+    }
 }

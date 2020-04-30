@@ -8,6 +8,7 @@
 
 import Foundation
 import DisplayKit
+import Promises
 
 /// CharactersListContainerPresenter in the presenter in charge of retrieve all characters and set the view into the right state
 final class CharactersListContainerPresenter{
@@ -38,17 +39,10 @@ private extension CharactersListContainerPresenter {
         guard !loading else { return }
         
         loading = true
-        /// Interactor returns always in main thread
-        getCharacters.execute(offset: offset) { [weak self] result in
-                                guard let s = self else { return }
-                                s.loading = false
-                                switch result {
-                                case .success(let characters):
-                                    s.getCharactersFinished(with: characters)
-                                case .failure(let error):
-                                    s.getCharactersFinished(with: error)
-                                }
-        }
+        getCharacters.execute(offset: offset)
+            .always { self.loading = false }
+            .then(getCharactersFinished)
+            .catch(getCharactersFinished)
     }
     
     func getCharactersFinished(with newCharacters: [CharacterListModel]) {
